@@ -1,0 +1,6 @@
+{
+  "summary":  "Implementation plan for Aura iOS Spaced Repetition & AI Voice Recall Flashcards application. Details full interactive coverage for Library, Deck Detail, AI Generator (Gemini-powered), Active Flashcard Study with SRS grading, Live Voice Coach call screen with Web Speech recognition, and Local Models & Settings.",
+  "updatedAt":  "2026-10-24T16:35:08.186971570Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

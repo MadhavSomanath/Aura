@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}.bottom-safe{bottom:env(safe-area-inset-bottom,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container": "#eeedf3", "primary-container": "#0073e0", "error": "#ba1a1a", "secondary-fixed": "#e2dfff", "outline-variant": "#c0c6d6", "surface-container-low": "#f4f3f8", "tertiary": "#9a4100", "on-secondary-container": "#fffbff", "primary-fixed": "#d6e3ff", "on-tertiary-fixed-variant": "#793100", "on-tertiary": "#ffffff", "inverse-surface": "#2f3034", "coach-gradient-end": "#0A84FF", "on-surface-variant": "#414754", "text-primary": "#000000", "secondary-container": "#6462ec", "inverse-on-surface": "#f1f0f5", "on-primary": "#ffffff", "primary-fixed-dim": "#aac7ff", "surface-dim": "#dad9df", "secondary": "#4a47d2", "tertiary-fixed-dim": "#ffb691", "on-primary-fixed": "#001b3e", "error-container": "#ffdad6", "on-error": "#ffffff", "surface-container-high": "#e9e7ed", "background": "#faf9fe", "surface-bright": "#faf9fe", "success-green": "#34C759", "surface-container-highest": "#e3e2e7", "tertiary-fixed": "#ffdbcb", "on-tertiary-container": "#fffbff", "background-dark": "#000000", "on-surface": "#1a1b1f", "on-primary-fixed-variant": "#00468d", "on-secondary": "#ffffff", "surface": "#faf9fe", "surface-light": "#FFFFFF", "surface-tint": "#005db8", "surface-dark": "#1C1C1E", "outline": "#717786", "error-red": "#FF453A", "tertiary-container": "#c25300", "on-secondary-fixed-variant": "#332dbc", "primary": "#005ab3", "surface-variant": "#e3e2e7", "inverse-primary": "#aac7ff", "surface-container-lowest": "#ffffff", "text-secondary": "#8E8E93", "on-error-container": "#93000a", "background-light": "#F2F2F7", "on-primary-container": "#fefcff", "secondary-fixed-dim": "#c2c1ff", "on-tertiary-fixed": "#341100", "on-secondary-fixed": "#0c006b", "coach-gradient-start": "#5E5CE6", "on-background": "#1a1b1f", "warning-orange": "#FF9F0A" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xl": "2rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "gutter": "1rem" }, fontFamily: { "caption": ["Inter"], "headline-lg": ["Inter"], "headline-xl": ["Inter"], "title-md": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"] }, fontSize: { "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-xl": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["17px", { "lineHeight": "22px", "fontWeight": "600" }], "body-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "25px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background-light font-body-md text-on-surface flex flex-col min-h-full antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-background-light/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-14 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">style</span><h1 class="font-title-md text-title-md text-on-surface tracking-tight font-semibold">Library</h1></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-28 px-margin bg-background-light min-h-screen"><div class="flex flex-col w-full gap-space-md">
+<!-- Dynamic Script for Tab Sync & Flip Preview Interactions -->
+<script>
+    // Sync Bottom Navigation to reflect active 'Generator' tab
+    (function syncNavigation() {
+      const currentNavLinks = document.querySelectorAll('nav a[data-path]');
+      currentNavLinks.forEach(link => {
+        const path = link.getAttribute('data-path');
+        const icon = link.querySelector('.material-symbols-outlined');
+        const label = link.querySelector('span:last-child');
+        
+        if (path === 'generator') {
+          link.classList.remove('text-on-surface-variant');
+          link.classList.add('text-primary', 'font-semibold');
+          if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+        } else {
+          link.classList.remove('text-primary', 'font-semibold');
+          link.classList.add('text-on-surface-variant');
+          if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+        }
+      });
+    })();
+
+    // Micro-interactions for Cards
+    function toggleCardState(btn, state) {
+      const card = btn.closest('.flashcard-node');
+      const keepBtn = card.querySelector('.btn-keep');
+      const discardBtn = card.querySelector('.btn-discard');
+      
+      if (state === 'keep') {
+        keepBtn.classList.add('bg-success-green', 'text-surface-light');
+        keepBtn.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+        discardBtn.classList.remove('bg-error-container', 'text-error');
+        discardBtn.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      } else {
+        discardBtn.classList.add('bg-error-container', 'text-error');
+        discardBtn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+        keepBtn.classList.remove('bg-success-green', 'text-surface-light');
+        keepBtn.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+        card.style.opacity = '0.55';
+      }
+    }
+
+    function quickFillText() {
+      const textarea = document.getElementById('notes-source');
+      textarea.value = `日本語の「木漏れ日」(Komorebi) は、木々の葉の間から差し込む陽光を表す風情ある言葉。対して「改善」(Kaizen) は日々の漸進的な向上を指し、グローバルなビジネス思想となった。「過信」(Kashin) は自己能力への盲信に警鐘を鳴らす表現。`;
+      const counter = document.getElementById('token-counter');
+      if (counter) counter.innerText = '138 chars • ~64 tokens (Local inference)';
+    }
+
+    function clearSourceText() {
+      const textarea = document.getElementById('notes-source');
+      textarea.value = '';
+      const counter = document.getElementById('token-counter');
+      if (counter) counter.innerText = '0 chars • ~0 tokens (Local inference)';
+    }
+  </script>
+<!-- Top Context Header & Local Model Status Bar -->
+<div class="flex flex-col gap-space-xs pt-1">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Generate Cards</h2>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-primary/10 text-primary font-caption text-caption">
+<span class="material-symbols-outlined text-[13px] mr-1" style="font-variation-settings: 'FILL' 1;">bolt</span>
+            Mistral 7B (On-Device)
+          </span>
+<span class="w-1.5 h-1.5 rounded-full bg-success-green"></span>
+</div>
+</div>
+<!-- Target Deck Selector Pill -->
+<button class="flex items-center gap-1 px-3 py-1.5 bg-surface-light rounded-full shadow-sm text-on-surface transition-transform active:scale-95" type="button">
+<span class="material-symbols-outlined text-primary text-[18px]">folder_special</span>
+<span class="font-label-md text-label-md max-w-[105px] truncate">Japanese Vocab</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Main Note Input Surface -->
+<div class="bg-surface-light rounded-DEFAULT p-space-md shadow-sm flex flex-col gap-space-sm relative">
+<!-- Utility Quick Actions Bar -->
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-1.5">
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md active:bg-primary-fixed active:text-on-primary-fixed transition-colors" onclick="quickFillText()" type="button">
+<span class="material-symbols-outlined text-[14px]">content_paste</span>
+<span>Paste</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md active:bg-primary-fixed active:text-on-primary-fixed transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>
+<span>Extract Terms</span>
+</button>
+</div>
+<button class="w-7 h-7 flex items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant hover:text-error active:bg-error-container active:text-error transition-colors" onclick="clearSourceText()" title="Clear text" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Live Textarea with Realistic Context Content -->
+<div class="relative w-full">
+<textarea class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-DEFAULT p-3 outline-none resize-none placeholder:text-text-secondary leading-relaxed" id="notes-source" placeholder="Paste lecture notes, articles, or transcripts here..." rows="5">Lecture Notes - Japanese Aesthetics &amp; Modern Idioms:
+1. 木漏れ日 (Komorebi): An untranslatable evocative phrase referencing sunlight filtering through tree leaves during late afternoon walks.
+2. 改善 (Kaizen): Foundational manufacturing philosophy popularized by Toyota; emphasizes small, incremental positive updates everyday.
+3. 過信 (Kashin): Warning against arrogant overconfidence in one's intellect or preparation.</textarea>
+</div>
+<!-- Bottom Counter & Device Safety Badge -->
+<div class="flex items-center justify-between pt-0.5">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-primary">memory</span>
+<span class="font-caption text-caption" id="token-counter">1,240 chars • ~310 tokens (Local inference)</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[14px] text-success-green">speed</span>
+<span>42 t/s</span>
+</div>
+</div>
+</div>
+<!-- Primary Generation CTA Area -->
+<div class="flex flex-col items-center gap-space-xs">
+<button class="w-full min-h-[50px] py-3.5 px-6 rounded-full bg-gradient-to-r from-coach-gradient-start to-coach-gradient-end text-surface-light font-title-md text-title-md shadow-[0_4px_16px_rgba(10,132,255,0.28)] flex items-center justify-center gap-2 active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span>Generate with AI (Local)</span>
+</button>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">lock</span>
+<span>100% On-Device • No data leaves your iPhone</span>
+</div>
+</div>
+<!-- Generated Flashcards Preview Section -->
+<div class="flex flex-col gap-space-sm pt-2">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-2">
+<h3 class="font-title-md text-title-md text-on-surface tracking-tight">Generated Cards</h3>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md">3 Ready</span>
+</div>
+<button class="flex items-center gap-1 text-primary font-label-md text-label-md active:opacity-70 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>Accept All (3)</span>
+</button>
+</div>
+<!-- Horizontal Flashcard Carousel -->
+<div class="flex overflow-x-auto gap-space-md pb-3 pt-1 -mx-margin px-margin snap-x snap-mandatory">
+<!-- Card 1 (Komorebi) -->
+<div class="flashcard-node snap-center shrink-0 w-[290px] bg-surface-light rounded-DEFAULT p-space-md shadow-sm flex flex-col justify-between transition-all duration-200">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption">
+              JLPT N2 / N3 • Vocab
+            </span>
+<span class="material-symbols-outlined text-primary text-[18px]">translate</span>
+</div>
+<div class="pt-1">
+<span class="font-caption text-caption uppercase tracking-wider text-text-secondary">Front Side</span>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight mt-0.5">
+              木漏れ日
+            </div>
+<p class="font-label-md text-label-md text-primary font-medium mt-0.5">Komorebi</p>
+</div>
+<div class="bg-surface-container-low rounded-DEFAULT p-3 mt-1">
+<span class="font-caption text-caption uppercase tracking-wider text-text-secondary block mb-1">Back Side</span>
+<p class="font-body-md text-body-md text-on-surface font-normal leading-snug">
+              Sunlight filtering through trees
+            </p>
+<p class="font-caption text-caption text-on-surface-variant mt-1.5 italic">
+              Poetic noun describing sunlight and leaves interplay.
+            </p>
+</div>
+</div>
+<!-- Action Row -->
+<div class="flex items-center gap-2 pt-space-md mt-auto">
+<button class="btn-discard flex-1 min-h-[44px] py-2 px-3 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-1 active:bg-error-container active:text-error transition-colors" onclick="toggleCardState(this, 'discard')" type="button">
+<span class="material-symbols-outlined text-[16px]">delete_outline</span>
+<span>Discard</span>
+</button>
+<button class="btn-keep flex-1 min-h-[44px] py-2 px-3 rounded-full bg-success-green text-surface-light font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all" onclick="toggleCardState(this, 'keep')" type="button">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Keep</span>
+</button>
+</div>
+</div>
+<!-- Card 2 (Kaizen) -->
+<div class="flashcard-node snap-center shrink-0 w-[290px] bg-surface-light rounded-DEFAULT p-space-md shadow-sm flex flex-col justify-between transition-all duration-200">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption">
+              Business &amp; Philosophy
+            </span>
+<span class="material-symbols-outlined text-secondary text-[18px]">psychology</span>
+</div>
+<div class="pt-1">
+<span class="font-caption text-caption uppercase tracking-wider text-text-secondary">Front Side</span>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight mt-0.5">
+              改善
+            </div>
+<p class="font-label-md text-label-md text-primary font-medium mt-0.5">Kaizen</p>
+</div>
+<div class="bg-surface-container-low rounded-DEFAULT p-3 mt-1">
+<span class="font-caption text-caption uppercase tracking-wider text-text-secondary block mb-1">Back Side</span>
+<p class="font-body-md text-body-md text-on-surface font-normal leading-snug">
+              Continuous improvement
+            </p>
+<p class="font-caption text-caption text-on-surface-variant mt-1.5 italic">
+              Philosophy of small, daily positive compounding changes.
+            </p>
+</div>
+</div>
+<!-- Action Row -->
+<div class="flex items-center gap-2 pt-space-md mt-auto">
+<button class="btn-discard flex-1 min-h-[44px] py-2 px-3 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-1 active:bg-error-container active:text-error transition-colors" onclick="toggleCardState(this, 'discard')" type="button">
+<span class="material-symbols-outlined text-[16px]">delete_outline</span>
+<span>Discard</span>
+</button>
+<button class="btn-keep flex-1 min-h-[44px] py-2 px-3 rounded-full bg-success-green text-surface-light font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all" onclick="toggleCardState(this, 'keep')" type="button">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Keep</span>
+</button>
+</div>
+</div>
+<!-- Card 3 (Kashin) -->
+<div class="flashcard-node snap-center shrink-0 w-[290px] bg-surface-light rounded-DEFAULT p-space-md shadow-sm flex flex-col justify-between transition-all duration-200">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption">
+              Kanji Compound
+            </span>
+<span class="material-symbols-outlined text-warning-orange text-[18px]">warning</span>
+</div>
+<div class="pt-1">
+<span class="font-caption text-caption uppercase tracking-wider text-text-secondary">Front Side</span>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight mt-0.5">
+              過信
+            </div>
+<p class="font-label-md text-label-md text-primary font-medium mt-0.5">Kashin</p>
+</div>
+<div class="bg-surface-container-low rounded-DEFAULT p-3 mt-1">
+<span class="font-caption text-caption uppercase tracking-wider text-text-secondary block mb-1">Back Side</span>
+<p class="font-body-md text-body-md text-on-surface font-normal leading-snug">
+              Overconfidence
+            </p>
+<p class="font-caption text-caption text-on-surface-variant mt-1.5 italic">
+              Trusting excessively in one's own ability or luck.
+            </p>
+</div>
+</div>
+<!-- Action Row -->
+<div class="flex items-center gap-2 pt-space-md mt-auto">
+<button class="btn-discard flex-1 min-h-[44px] py-2 px-3 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-1 active:bg-error-container active:text-error transition-colors" onclick="toggleCardState(this, 'discard')" type="button">
+<span class="material-symbols-outlined text-[16px]">delete_outline</span>
+<span>Discard</span>
+</button>
+<button class="btn-keep flex-1 min-h-[44px] py-2 px-3 rounded-full bg-success-green text-surface-light font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all" onclick="toggleCardState(this, 'keep')" type="button">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Keep</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Audio Pronunciation / AI Voice Coach Assist Capsule -->
+<div class="bg-surface-light rounded-DEFAULT p-space-md shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-coach-gradient-start to-coach-gradient-end flex items-center justify-center text-surface-light shrink-0">
+<span class="material-symbols-outlined text-[20px]">graphic_eq</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">Audio Pitch Accents</span>
+<span class="font-caption text-caption text-on-surface-variant truncate">Synthesize native pitch contours for these cards</span>
+</div>
+</div>
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-primary/10 text-primary font-label-md text-label-md active:bg-primary active:text-surface-light transition-colors ml-2" type="button">
+      Preview
+    </button>
+</div>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-light/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">style</span><span class="font-caption text-caption tracking-tight mt-0.5">Library</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="generator" href="#"><span class="material-symbols-outlined text-[24px]">auto_awesome</span><span class="font-caption text-caption tracking-tight mt-0.5">Generator</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="voice-coach" href="#"><span class="material-symbols-outlined text-[24px]">graphic_eq</span><span class="font-caption text-caption tracking-tight mt-0.5">Voice Coach</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="settings" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-caption text-caption tracking-tight mt-0.5">Settings</span></a></div><div class="w-full flex justify-center pb-2 pt-1 pointer-events-none"><div class="w-36 h-1 rounded-full bg-on-surface/20"></div></div></nav></body></html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}.bottom-safe{bottom:env(safe-area-inset-bottom,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container": "#eeedf3", "primary-container": "#0073e0", "error": "#ba1a1a", "secondary-fixed": "#e2dfff", "outline-variant": "#c0c6d6", "surface-container-low": "#f4f3f8", "tertiary": "#9a4100", "on-secondary-container": "#fffbff", "primary-fixed": "#d6e3ff", "on-tertiary-fixed-variant": "#793100", "on-tertiary": "#ffffff", "inverse-surface": "#2f3034", "coach-gradient-end": "#0A84FF", "on-surface-variant": "#414754", "text-primary": "#000000", "secondary-container": "#6462ec", "inverse-on-surface": "#f1f0f5", "on-primary": "#ffffff", "primary-fixed-dim": "#aac7ff", "surface-dim": "#dad9df", "secondary": "#4a47d2", "tertiary-fixed-dim": "#ffb691", "on-primary-fixed": "#001b3e", "error-container": "#ffdad6", "on-error": "#ffffff", "surface-container-high": "#e9e7ed", "background": "#faf9fe", "surface-bright": "#faf9fe", "success-green": "#34C759", "surface-container-highest": "#e3e2e7", "tertiary-fixed": "#ffdbcb", "on-tertiary-container": "#fffbff", "background-dark": "#000000", "on-surface": "#1a1b1f", "on-primary-fixed-variant": "#00468d", "on-secondary": "#ffffff", "surface": "#faf9fe", "surface-light": "#FFFFFF", "surface-tint": "#005db8", "surface-dark": "#1C1C1E", "outline": "#717786", "error-red": "#FF453A", "tertiary-container": "#c25300", "on-secondary-fixed-variant": "#332dbc", "primary": "#005ab3", "surface-variant": "#e3e2e7", "inverse-primary": "#aac7ff", "surface-container-lowest": "#ffffff", "text-secondary": "#8E8E93", "on-error-container": "#93000a", "background-light": "#F2F2F7", "on-primary-container": "#fefcff", "secondary-fixed-dim": "#c2c1ff", "on-tertiary-fixed": "#341100", "on-secondary-fixed": "#0c006b", "coach-gradient-start": "#5E5CE6", "on-background": "#1a1b1f", "warning-orange": "#FF9F0A" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xl": "2rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "gutter": "1rem" }, fontFamily: { "caption": ["Inter"], "headline-lg": ["Inter"], "headline-xl": ["Inter"], "title-md": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"] }, fontSize: { "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-xl": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["17px", { "lineHeight": "22px", "fontWeight": "600" }], "body-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "25px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background-light font-body-md text-on-surface flex flex-col min-h-full antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-background-light/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-14 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">style</span><h1 class="font-title-md text-title-md text-on-surface tracking-tight font-semibold">Library</h1></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-28 px-margin bg-background-light min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Top Navigation & Action Bar -->
+<div class="flex items-center justify-between w-full py-space-sm mb-space-xs">
+<button class="flex items-center gap-1 text-primary font-body-md text-body-md active:opacity-60 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[22px]">arrow_back_ios_new</span>
+<span class="font-medium tracking-tight">Library</span>
+</button>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Deck statistics" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">insights</span>
+</button>
+<button aria-label="Deck settings" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+<!-- Large Title Area & Badge -->
+<div class="flex flex-col mb-space-md">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-caption text-caption font-semibold">
+        JLPT N3
+      </span>
+<span class="font-caption text-caption text-text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success-green"></span>
+        Active Spaced Repetition
+      </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-text-primary tracking-tight">
+      Japanese Vocab
+    </h1>
+<p class="font-body-md text-body-md text-text-secondary mt-0.5">
+      Kanji &amp; Core Vocab • 142 Cards total
+    </p>
+</div>
+<!-- Primary CTAs (Study Now + Voice Coach) -->
+<div class="flex items-center gap-space-sm mb-space-lg">
+<button class="flex-1 h-[54px] rounded-full bg-coach-gradient-end text-on-primary font-title-md text-title-md font-semibold flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(10,132,255,0.28)] active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span>Study Now (45 Due)</span>
+</button>
+<button aria-label="Voice Coach Study Session" class="h-[54px] w-[54px] rounded-full bg-surface-light text-coach-gradient-start shadow-sm flex items-center justify-center active:scale-[0.96] transition-transform relative" type="button">
+<span class="material-symbols-outlined text-[24px]">graphic_eq</span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-coach-gradient-start rounded-full ring-2 ring-surface-light animate-ping opacity-75"></span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-coach-gradient-start rounded-full ring-2 ring-surface-light"></span>
+</button>
+</div>
+<!-- Metric Cards Row -->
+<div class="grid grid-cols-3 gap-2.5 mb-space-lg">
+<!-- Card 1: Total Cards -->
+<div class="bg-surface-light rounded-DEFAULT p-3 shadow-[0_2px_8px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+<div class="flex items-center justify-between text-text-secondary">
+<span class="font-caption text-caption uppercase tracking-wider font-semibold text-[10px]">Cards</span>
+<span class="material-symbols-outlined text-[16px] text-primary">layers</span>
+</div>
+<div class="my-1.5">
+<span class="font-headline-md text-headline-md font-bold text-text-primary tracking-tight">142</span>
+</div>
+<div class="flex items-center text-success-green font-caption text-[11px] font-medium leading-none">
+<span class="material-symbols-outlined text-[14px]">add</span>12 new
+      </div>
+</div>
+<!-- Card 2: Retention Rate -->
+<div class="bg-surface-light rounded-DEFAULT p-3 shadow-[0_2px_8px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+<div class="flex items-center justify-between text-text-secondary">
+<span class="font-caption text-caption uppercase tracking-wider font-semibold text-[10px]">Retention</span>
+<span class="material-symbols-outlined text-[16px] text-success-green">verified</span>
+</div>
+<div class="my-1.5 flex items-baseline gap-1">
+<span class="font-headline-md text-headline-md font-bold text-text-primary tracking-tight">89</span>
+<span class="font-caption text-caption font-semibold text-text-secondary">%</span>
+</div>
+<div class="flex items-center text-success-green font-caption text-[11px] font-medium leading-none">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>+3.4%
+      </div>
+</div>
+<!-- Card 3: Next Spike -->
+<div class="bg-surface-light rounded-DEFAULT p-3 shadow-[0_2px_8px_rgba(0,0,0,0.03)] flex flex-col justify-between">
+<div class="flex items-center justify-between text-text-secondary">
+<span class="font-caption text-caption uppercase tracking-wider font-semibold text-[10px]">Next Wave</span>
+<span class="material-symbols-outlined text-[16px] text-warning-orange">schedule</span>
+</div>
+<div class="my-1.5">
+<span class="font-headline-md text-headline-md font-bold text-text-primary tracking-tight">2h 40m</span>
+</div>
+<div class="flex items-center text-text-secondary font-caption text-[11px] leading-none">
+<span>18 cards</span>
+</div>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="relative w-full mb-space-sm">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-11 pl-10 pr-10 rounded-xl bg-surface-container text-on-surface placeholder:text-text-secondary font-body-md text-body-md focus:outline-none focus:bg-surface-light shadow-sm transition-all" id="deck-search-input" placeholder="Search cards, kanji, or meanings..." type="text"/>
+<button class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-text-secondary hover:text-on-surface" id="clear-search-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+<!-- Filter Pills Row -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 mb-space-md" style="scrollbar-width: none;">
+<button class="filter-chip active-filter px-3.5 py-1.5 rounded-full bg-text-primary text-surface-light font-label-md text-label-md font-medium shrink-0 transition-colors" type="button">
+      All (142)
+    </button>
+<button class="filter-chip px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md font-medium shrink-0 transition-colors hover:bg-surface-light" type="button">
+      Due (45)
+    </button>
+<button class="filter-chip px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md font-medium shrink-0 transition-colors hover:bg-surface-light" type="button">
+      Learning (29)
+    </button>
+<button class="filter-chip px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md font-medium shrink-0 transition-colors hover:bg-surface-light" type="button">
+      Mastered (68)
+    </button>
+<button aria-label="Sort options" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant shrink-0 active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_vert</span>
+</button>
+</div>
+<!-- Section Header -->
+<div class="flex items-center justify-between mb-space-sm px-0.5">
+<span class="font-caption text-caption uppercase font-semibold text-text-secondary tracking-wider">
+      Cards in this deck
+    </span>
+<span class="font-caption text-caption text-primary font-medium cursor-pointer">
+      Select Multiple
+    </span>
+</div>
+<!-- Flashcards List -->
+<div class="flex flex-col gap-2.5" id="flashcards-container">
+<!-- Card 1 -->
+<div class="card-item bg-surface-light rounded-DEFAULT p-4 shadow-[0_2px_8px_rgba(0,0,0,0.03)] active:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold tracking-tight">
+              約束
+            </h2>
+<span class="font-body-md text-body-md text-text-secondary font-normal">
+              (やくそく)
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 truncate">
+            Promise, appointment
+          </p>
+</div>
+<div class="flex flex-col items-end shrink-0 gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-warning-orange/15 text-warning-orange font-caption text-caption font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-orange"></span>
+            Due Today
+          </span>
+<button aria-label="Listen audio preview" class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Retention Progress Bar -->
+<div class="flex items-center gap-2 pt-1">
+<span class="font-caption text-[11px] text-text-secondary font-medium w-14">
+          Recall 75%
+        </span>
+<div class="flex-1 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 75%;"></div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="card-item bg-surface-light rounded-DEFAULT p-4 shadow-[0_2px_8px_rgba(0,0,0,0.03)] active:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold tracking-tight">
+              改善
+            </h2>
+<span class="font-body-md text-body-md text-text-secondary font-normal">
+              (かいぜん)
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 truncate">
+            Continuous improvement, change for better
+          </p>
+</div>
+<div class="flex flex-col items-end shrink-0 gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-medium">
+            Due in 3h
+          </span>
+<button aria-label="Listen audio preview" class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Retention Progress Bar -->
+<div class="flex items-center gap-2 pt-1">
+<span class="font-caption text-[11px] text-text-secondary font-medium w-14">
+          Recall 92%
+        </span>
+<div class="flex-1 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-success-green rounded-full" style="width: 92%;"></div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="card-item bg-surface-light rounded-DEFAULT p-4 shadow-[0_2px_8px_rgba(0,0,0,0.03)] active:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold tracking-tight">
+              雰囲気
+            </h2>
+<span class="font-body-md text-body-md text-text-secondary font-normal">
+              (ふんいき)
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 truncate">
+            Atmosphere, mood, ambiance
+          </p>
+</div>
+<div class="flex flex-col items-end shrink-0 gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-caption text-caption font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            New
+          </span>
+<button aria-label="Listen audio preview" class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Tag / Detail Row -->
+<div class="flex items-center justify-between pt-1 text-text-secondary">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-caption text-[11px] font-medium">
+            Kanji
+          </span>
+<span class="font-caption text-[11px] text-text-secondary">
+            Never reviewed
+          </span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="card-item bg-surface-light rounded-DEFAULT p-4 shadow-[0_2px_8px_rgba(0,0,0,0.03)] active:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold tracking-tight">
+              絶妙
+            </h2>
+<span class="font-body-md text-body-md text-text-secondary font-normal">
+              (ぜつみょう)
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 truncate">
+            Exquisite, miraculous, superb
+          </p>
+</div>
+<div class="flex flex-col items-end shrink-0 gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-success-green/15 text-success-green font-caption text-caption font-semibold">
+            Good (In 4d)
+          </span>
+<button aria-label="Listen audio preview" class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Retention Progress Bar -->
+<div class="flex items-center gap-2 pt-1">
+<span class="font-caption text-[11px] text-text-secondary font-medium w-14">
+          Recall 98%
+        </span>
+<div class="flex-1 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-success-green rounded-full" style="width: 98%;"></div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-secondary">chevron_right</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="card-item bg-surface-light rounded-DEFAULT p-4 shadow-[0_2px_8px_rgba(0,0,0,0.03)] active:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-text-primary font-bold tracking-tight">
+              遠慮
+            </h2>
+<span class="font-body-md text-body-md text-text-secondary font-normal">
+              (えんりょ)
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5 truncate">
+            Restraint, hesitation, tact
+          </p>
+</div>
+<div class="flex flex-col items-end shrink-0 gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-warning-orange/15 text-warning-orange font-caption text-caption font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-orange"></span>
+            Due Today
+          </span>
+<button aria-label="Listen audio preview" class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-primary active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Retention Progress Bar -->
+<div class="flex items-center gap-2 pt-1">
+<span class="font-caption text-[11px] text-text-secondary font-medium w-14">
+          Recall 68%
+        </span>
+<div class="flex-1 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-warning-orange rounded-full" style="width: 68%;"></div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-text-secondary">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Quick Add Card Floating Bar / Subtle Bottom Action -->
+<div class="mt-space-md pt-2 flex items-center justify-center">
+<button class="h-10 px-4 rounded-full bg-surface-light text-primary font-label-md text-label-md font-semibold shadow-sm flex items-center gap-1.5 active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Add New Card to Deck</span>
+</button>
+</div>
+</div>
+<script>
+  // Simple client-side micro-interactions for Deck Details
+  (function() {
+    const searchInput = document.getElementById('deck-search-input');
+    const clearBtn = document.getElementById('clear-search-btn');
+    const cards = document.querySelectorAll('.card-item');
+
+    if (searchInput && clearBtn) {
+      searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        if (query.length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+
+        cards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          if (text.includes(query)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+
+      clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+        cards.forEach(card => card.style.display = 'block');
+        searchInput.focus();
+      });
+    }
+
+    // Filter pill toggles
+    const filterChips = document.querySelectorAll('.filter-chip');
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', function() {
+        filterChips.forEach(c => {
+          c.classList.remove('bg-text-primary', 'text-surface-light');
+          c.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        this.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        this.classList.add('bg-text-primary', 'text-surface-light');
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-light/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">style</span><span class="font-caption text-caption tracking-tight mt-0.5">Library</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="generator" href="#"><span class="material-symbols-outlined text-[24px]">auto_awesome</span><span class="font-caption text-caption tracking-tight mt-0.5">Generator</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="voice-coach" href="#"><span class="material-symbols-outlined text-[24px]">graphic_eq</span><span class="font-caption text-caption tracking-tight mt-0.5">Voice Coach</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="settings" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-caption text-caption tracking-tight mt-0.5">Settings</span></a></div><div class="w-full flex justify-center pb-2 pt-1 pointer-events-none"><div class="w-36 h-1 rounded-full bg-on-surface/20"></div></div></nav></body></html>

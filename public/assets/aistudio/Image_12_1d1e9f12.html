@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}.bottom-safe{bottom:env(safe-area-inset-bottom,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container": "#eeedf3", "primary-container": "#0073e0", "error": "#ba1a1a", "secondary-fixed": "#e2dfff", "outline-variant": "#c0c6d6", "surface-container-low": "#f4f3f8", "tertiary": "#9a4100", "on-secondary-container": "#fffbff", "primary-fixed": "#d6e3ff", "on-tertiary-fixed-variant": "#793100", "on-tertiary": "#ffffff", "inverse-surface": "#2f3034", "coach-gradient-end": "#0A84FF", "on-surface-variant": "#414754", "text-primary": "#000000", "secondary-container": "#6462ec", "inverse-on-surface": "#f1f0f5", "on-primary": "#ffffff", "primary-fixed-dim": "#aac7ff", "surface-dim": "#dad9df", "secondary": "#4a47d2", "tertiary-fixed-dim": "#ffb691", "on-primary-fixed": "#001b3e", "error-container": "#ffdad6", "on-error": "#ffffff", "surface-container-high": "#e9e7ed", "background": "#faf9fe", "surface-bright": "#faf9fe", "success-green": "#34C759", "surface-container-highest": "#e3e2e7", "tertiary-fixed": "#ffdbcb", "on-tertiary-container": "#fffbff", "background-dark": "#000000", "on-surface": "#1a1b1f", "on-primary-fixed-variant": "#00468d", "on-secondary": "#ffffff", "surface": "#faf9fe", "surface-light": "#FFFFFF", "surface-tint": "#005db8", "surface-dark": "#1C1C1E", "outline": "#717786", "error-red": "#FF453A", "tertiary-container": "#c25300", "on-secondary-fixed-variant": "#332dbc", "primary": "#005ab3", "surface-variant": "#e3e2e7", "inverse-primary": "#aac7ff", "surface-container-lowest": "#ffffff", "text-secondary": "#8E8E93", "on-error-container": "#93000a", "background-light": "#F2F2F7", "on-primary-container": "#fefcff", "secondary-fixed-dim": "#c2c1ff", "on-tertiary-fixed": "#341100", "on-secondary-fixed": "#0c006b", "coach-gradient-start": "#5E5CE6", "on-background": "#1a1b1f", "warning-orange": "#FF9F0A" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xl": "2rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "gutter": "1rem" }, fontFamily: { "caption": ["Inter"], "headline-lg": ["Inter"], "headline-xl": ["Inter"], "title-md": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"] }, fontSize: { "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-xl": ["34px", { "lineHeight": "41px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["17px", { "lineHeight": "22px", "fontWeight": "600" }], "body-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["17px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "25px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "500" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background-light font-body-md text-on-surface flex flex-col min-h-full antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-background-light/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-14 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">style</span><h1 class="font-title-md text-title-md text-on-surface tracking-tight font-semibold">Library</h1></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-28 px-margin bg-background-light min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Active Tab State Synchronizer -->
+<script>
+    (function() {
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(link => {
+        const path = link.getAttribute('data-path');
+        if (path === 'settings') {
+          link.classList.remove('text-on-surface-variant');
+          link.classList.add('text-primary', 'font-semibold');
+        } else {
+          link.classList.remove('text-primary', 'font-semibold');
+          link.classList.add('text-on-surface-variant');
+        }
+      });
+    })();
+  </script>
+<!-- iOS Large Title & Ambient Summary Card -->
+<header class="flex flex-col pt-3 pb-4">
+<span class="font-caption text-caption uppercase tracking-wider text-outline font-semibold mb-1">Device &amp; Intelligence</span>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Local Models &amp; Settings</h1>
+</header>
+<!-- Storage & Hardware Diagnostic Hero Surface -->
+<section class="bg-surface-light rounded-DEFAULT p-4 shadow-sm mb-6 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="relative flex items-center justify-center w-2.5 h-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-green opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-success-green"></span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-surface">On-Device Neural Engine</span>
+</div>
+<span class="font-caption text-caption font-medium px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed">ANE Gen 3</span>
+</div>
+<!-- Segmented Storage Meter -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between font-caption text-caption text-text-secondary">
+<span>Storage Used: <strong class="text-on-surface font-semibold">5.6 GB</strong> of 128 GB</span>
+<span>4.3% Capacity</span>
+</div>
+<div class="h-2 w-full rounded-full bg-surface-container overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 68%" title="AI Models (4.2 GB)"></div>
+<div class="h-full bg-secondary-container" style="width: 14%" title="Voices (790 MB)"></div>
+<div class="h-full bg-warning-orange" style="width: 8%" title="Audio Cache (320 MB)"></div>
+<div class="h-full bg-surface-dim" style="width: 10%" title="Other App Data"></div>
+</div>
+<div class="flex items-center gap-3 pt-0.5 font-caption text-caption text-text-secondary flex-wrap">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary inline-block"></span>
+<span>LLM (4.2 GB)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-container inline-block"></span>
+<span>TTS (790 MB)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-warning-orange inline-block"></span>
+<span>Cache (320 MB)</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 1: AI VOICE ENGINE -->
+<section class="flex flex-col mb-6">
+<div class="px-2 pb-1.5">
+<span class="font-caption text-caption font-semibold tracking-wider text-outline uppercase">AI Voice Engine</span>
+</div>
+<div class="bg-surface-light rounded-DEFAULT shadow-sm flex flex-col overflow-hidden">
+<!-- Row 1: Active Model -->
+<div class="p-4 flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-secondary to-primary-container flex items-center justify-center shrink-0 shadow-sm text-on-primary">
+<span class="material-symbols-outlined text-[22px]">memory</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface truncate">Llama-3-8B-Instruct</h3>
+</div>
+<p class="font-caption text-caption text-text-secondary mt-0.5 line-clamp-1">
+                4-bit quantized • Whisper v3 • 4.2 GB
+              </p>
+</div>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-low text-success-green font-label-md text-label-md font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-green"></span>
+            Active
+          </span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-success-green">verified_user</span>
+            Zero network telemetry
+          </span>
+<button class="min-h-[44px] px-3.5 py-2 rounded-full bg-error-container text-on-error-container font-label-md text-label-md font-medium active:scale-95 transition-transform flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>Delete (4.2 GB)</span>
+</button>
+</div>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-16"></div>
+<!-- Row 2: Available Alternative Model -->
+<div class="p-4 flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">psychology</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h3 class="font-title-md text-title-md font-semibold text-on-surface truncate">Phi-3.5 Mini (3.8B)</h3>
+<p class="font-caption text-caption text-text-secondary mt-0.5">Ultra-fast latency • 2.1 GB</p>
+</div>
+</div>
+<button class="shrink-0 min-h-[44px] px-4 py-2 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md font-semibold active:scale-95 transition-transform flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">cloud_download</span>
+<span>Get 2.1 GB</span>
+</button>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-16"></div>
+<!-- Row 3: Inference Hardware Detail Row -->
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">speed</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Compute Accelerator</span>
+<span class="font-caption text-caption text-text-secondary">Apple Neural Engine (ANE) Core</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="font-label-md text-label-md font-semibold">Native</span>
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+<p class="px-3 pt-2 font-caption text-caption text-text-secondary">
+      Models run completely locally via Core ML. No voice audio, transcripts, or prompts ever leave this device.
+    </p>
+</section>
+<!-- SECTION 2: TEXT-TO-SPEECH VOICES -->
+<section class="flex flex-col mb-6">
+<div class="px-2 pb-1.5 flex items-center justify-between">
+<span class="font-caption text-caption font-semibold tracking-wider text-outline uppercase">Text-To-Speech Voices</span>
+<span class="font-caption text-caption text-text-secondary">2 Downloaded</span>
+</div>
+<div class="bg-surface-light rounded-DEFAULT shadow-sm flex flex-col overflow-hidden">
+<!-- Voice Row 1: Installed Default -->
+<div class="p-3.5 flex items-center justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[19px]">graphic_eq</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md font-medium text-on-surface truncate">Kenji</span>
+<span class="font-caption text-caption text-text-secondary">(JP, Natural Female)</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-caption text-caption text-[11px]">Neural HQ</span>
+<span class="font-caption text-caption text-text-secondary">380 MB</span>
+<span class="w-1 h-1 rounded-full bg-text-secondary"></span>
+<span class="font-caption text-caption text-primary font-medium">Default</span>
+</div>
+</div>
+</div>
+<button aria-label="Preview Voice Kenji" class="w-11 h-11 rounded-full flex items-center justify-center text-primary bg-surface-container-low active:bg-primary-fixed transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">volume_up</span>
+</button>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-14"></div>
+<!-- Voice Row 2: Installed -->
+<div class="p-3.5 flex items-center justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[19px]">graphic_eq</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md font-medium text-on-surface truncate">Daiki</span>
+<span class="font-caption text-caption text-text-secondary">(JP, Deep Male)</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-caption text-caption text-[11px]">Neural HQ</span>
+<span class="font-caption text-caption text-text-secondary">410 MB</span>
+<span class="w-1 h-1 rounded-full bg-text-secondary"></span>
+<span class="font-caption text-caption text-text-secondary font-medium">Installed</span>
+</div>
+</div>
+</div>
+<button aria-label="Preview Voice Daiki" class="w-11 h-11 rounded-full flex items-center justify-center text-primary bg-surface-container-low active:bg-primary-fixed transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">volume_up</span>
+</button>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-14"></div>
+<!-- Voice Row 3: Sakura (Available) -->
+<div class="p-3.5 flex items-center justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container text-outline flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[19px]">spatial_audio_off</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md font-medium text-on-surface truncate">Sakura</span>
+<span class="font-caption text-caption text-text-secondary">(JP, Casual Studio)</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-caption text-caption text-[11px]">Ultra HD</span>
+<span class="font-caption text-caption text-text-secondary">620 MB</span>
+</div>
+</div>
+</div>
+<button class="min-h-[44px] px-3.5 py-2 rounded-full bg-surface-container-low text-primary font-label-md text-label-md font-semibold flex items-center gap-1 active:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>620 MB</span>
+</button>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-14"></div>
+<!-- Voice Row 4: Elena (Available) -->
+<div class="p-3.5 flex items-center justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container text-outline flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[19px]">spatial_audio_off</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md font-medium text-on-surface truncate">Elena</span>
+<span class="font-caption text-caption text-text-secondary">(EN, UK Coach)</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-caption text-caption text-[11px]">Studio Neural</span>
+<span class="font-caption text-caption text-text-secondary">450 MB</span>
+</div>
+</div>
+</div>
+<button class="min-h-[44px] px-3.5 py-2 rounded-full bg-surface-container-low text-primary font-label-md text-label-md font-semibold flex items-center gap-1 active:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>450 MB</span>
+</button>
+</div>
+</div>
+<p class="px-3 pt-2 font-caption text-caption text-text-secondary">
+      High-fidelity local voices provide natural conversational audio feedback without buffering or internet access.
+    </p>
+</section>
+<!-- SECTION 3: AUDIO & RECOGNITION PREFERENCES -->
+<section class="flex flex-col mb-4">
+<div class="px-2 pb-1.5">
+<span class="font-caption text-caption font-semibold tracking-wider text-outline uppercase">Audio &amp; Recognition Preferences</span>
+</div>
+<div class="bg-surface-light rounded-DEFAULT shadow-sm flex flex-col overflow-hidden">
+<!-- Toggle Row 1: Offline Whisper -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Offline Whisper Transcription</span>
+<span class="font-caption text-caption text-text-secondary">Transcribe pronunciation purely on-device</span>
+</div>
+<button aria-checked="true" class="toggle-btn relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full bg-success-green transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-6 pointer-events-none inline-block h-7 w-7 rounded-full bg-surface-light shadow-md transform ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-4"></div>
+<!-- Toggle Row 2: Haptic Audio Feedback -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Haptic Audio Feedback</span>
+<span class="font-caption text-caption text-text-secondary">Taptic engine pulses during spoken rhythm</span>
+</div>
+<button aria-checked="true" class="toggle-btn relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full bg-success-green transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-6 pointer-events-none inline-block h-7 w-7 rounded-full bg-surface-light shadow-md transform ring-0 transition duration-200 ease-in-out mt-0.5 ml-0.5"></span>
+</button>
+</div>
+<!-- Hairline Inset Divider -->
+<div class="h-[1px] bg-surface-container ml-4"></div>
+<!-- Speech Rate Slider Row -->
+<div class="p-4 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md font-medium text-on-surface">Speech Feedback Rate</span>
+<span class="font-label-md text-label-md font-semibold text-primary" id="rate-value">1.00x (Natural)</span>
+</div>
+<div class="flex items-center gap-3 pt-1">
+<span class="material-symbols-outlined text-[20px] text-text-secondary">cruelty_free</span>
+<input class="w-full h-1.5 bg-surface-container rounded-lg appearance-none cursor-pointer accent-primary" id="rate-slider" max="1.5" min="0.75" step="0.05" type="range" value="1.0"/>
+<span class="material-symbols-outlined text-[20px] text-text-secondary">bolt</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive behavior for sliders and toggle switches -->
+<script>
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const isChecked = this.getAttribute('aria-checked') === 'true';
+        this.setAttribute('aria-checked', (!isChecked).toString());
+        const knob = this.querySelector('span');
+        if (isChecked) {
+          this.classList.remove('bg-success-green');
+          this.classList.add('bg-surface-container');
+          knob.classList.remove('translate-x-6');
+          knob.classList.add('translate-x-0');
+        } else {
+          this.classList.remove('bg-surface-container');
+          this.classList.add('bg-success-green');
+          knob.classList.remove('translate-x-0');
+          knob.classList.add('translate-x-6');
+        }
+      });
+    });
+
+    const rateSlider = document.getElementById('rate-slider');
+    const rateValue = document.getElementById('rate-value');
+    if (rateSlider && rateValue) {
+      rateSlider.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value).toFixed(2);
+        let label = 'Natural';
+        if (val < 0.9) label = 'Slow Study';
+        else if (val > 1.2) label = 'Fast Drill';
+        rateValue.textContent = `${val}x (${label})`;
+      });
+    }
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-light/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="library" href="#"><span class="material-symbols-outlined text-[24px]">style</span><span class="font-caption text-caption tracking-tight mt-0.5">Library</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="generator" href="#"><span class="material-symbols-outlined text-[24px]">auto_awesome</span><span class="font-caption text-caption tracking-tight mt-0.5">Generator</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="voice-coach" href="#"><span class="material-symbols-outlined text-[24px]">graphic_eq</span><span class="font-caption text-caption tracking-tight mt-0.5">Voice Coach</span></a><a class="flex-1 flex flex-col items-center justify-center min-w-[44px] min-h-[44px] py-1 text-on-surface-variant transition-colors hover:text-primary" data-path="settings" href="#"><span class="material-symbols-outlined text-[24px]">settings</span><span class="font-caption text-caption tracking-tight mt-0.5">Settings</span></a></div><div class="w-full flex justify-center pb-2 pt-1 pointer-events-none"><div class="w-36 h-1 rounded-full bg-on-surface/20"></div></div></nav></body></html>
