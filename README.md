@@ -1,7 +1,6 @@
 # Aura — iOS Native AI Voice & Spaced Repetition Flashcards
 
-> **Product Teardown & Engineering Spec**  
-> *Prepared from the desk of an AI Product Manager*
+> **Product Teardown & Engineering Spec**
 
 ---
 
