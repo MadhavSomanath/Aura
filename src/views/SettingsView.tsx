@@ -10,6 +10,13 @@ export const SettingsView: React.FC = () => {
   const [downloadedVoices, setDownloadedVoices] = useState<Set<string>>(new Set(['Kenji', 'Daiki']));
   const [testingVoice, setTestingVoice] = useState<string | null>(null);
   const [resetSuccessToast, setResetSuccessToast] = useState(false);
+  const [infoToast, setInfoToast] = useState<string | null>(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  const showToast = (msg: string) => {
+    setInfoToast(msg);
+    setTimeout(() => setInfoToast(null), 2500);
+  };
 
   const handleToggleWhisper = () => {
     triggerHaptic(settings.hapticAudio);
@@ -43,6 +50,7 @@ export const SettingsView: React.FC = () => {
   const handleDownloadVoice = (voiceName: string) => {
     triggerHaptic(settings.hapticAudio);
     setDownloadedVoices((prev) => new Set([...prev, voiceName]));
+    showToast(`Downloaded ${voiceName} Voice Pack!`);
   };
 
   const handleDownloadModel = (modelName: string) => {
@@ -52,24 +60,24 @@ export const SettingsView: React.FC = () => {
       setDownloadingModel(null);
       setActiveModel(modelName);
       updateSettings({ activeModel: modelName });
+      showToast(`Activated ${modelName}!`);
     }, 1500);
   };
 
-  const handleResetData = () => {
-    if (confirm('Reset all decks, cards, and study stats to factory defaults?')) {
-      resetDefaults();
-      setResetSuccessToast(true);
-      setTimeout(() => setResetSuccessToast(false), 2500);
-    }
+  const handleExecuteReset = () => {
+    resetDefaults();
+    setShowResetConfirm(false);
+    setResetSuccessToast(true);
+    setTimeout(() => setResetSuccessToast(false), 2500);
   };
 
   return (
     <div className="flex flex-col w-full pb-10 max-w-lg mx-auto">
       {/* Toast Notification */}
-      {resetSuccessToast && (
+      {(resetSuccessToast || infoToast) && (
         <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-black text-white text-[13px] font-medium shadow-xl flex items-center gap-2 animate-fade-in">
           <span className="material-symbols-outlined text-[#34C759] text-[18px]">check_circle</span>
-          <span>Reset to default library data!</span>
+          <span>{infoToast || 'Reset to default library data!'}</span>
         </div>
       )}
 
@@ -163,6 +171,7 @@ export const SettingsView: React.FC = () => {
                   onClick={() => {
                     setActiveModel('Llama-3-8B-Instruct');
                     updateSettings({ activeModel: 'Llama-3-8B-Instruct' });
+                    showToast('Switched to Llama-3-8B');
                   }}
                   className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold"
                 >
@@ -177,7 +186,7 @@ export const SettingsView: React.FC = () => {
                 Zero network telemetry
               </span>
               <button
-                onClick={() => alert('Model is integrated and locked as default runtime engine.')}
+                onClick={() => showToast('Model is integrated and locked as default runtime engine.')}
                 className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#ffdad6] text-[#ba1a1a] text-[13px] font-medium active:scale-95 transition-transform flex items-center gap-1.5"
                 type="button"
               >
@@ -493,13 +502,39 @@ export const SettingsView: React.FC = () => {
       {/* Danger Zone / Factory Reset */}
       <div className="px-2 pt-2">
         <button
-          onClick={handleResetData}
+          onClick={() => setShowResetConfirm(true)}
           type="button"
-          className="w-full py-3 rounded-2xl bg-white border border-red-200 text-[#ba1a1a] text-[13px] font-semibold hover:bg-red-50 active:scale-95 transition-all"
+          className="w-full py-3 rounded-2xl bg-white border border-red-200 text-[#ba1a1a] text-[13px] font-semibold hover:bg-red-50 active:scale-95 transition-all shadow-sm"
         >
           Reset All Decks & Settings to Factory Defaults
         </button>
       </div>
+
+      {/* Reset Confirmation Modal */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl border border-black/5 animate-scale-up">
+            <h3 className="text-[18px] font-bold text-black mb-1">Reset All Data?</h3>
+            <p className="text-[13px] text-slate-500 mb-5">
+              Reset all decks, cards, and study statistics back to default pre-seeded state?
+            </p>
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 h-10 rounded-full bg-slate-100 text-slate-700 text-[13px] font-semibold active:scale-95"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleExecuteReset}
+                className="flex-1 h-10 rounded-full bg-[#FF453A] text-white text-[13px] font-semibold shadow-md active:scale-95"
+              >
+                Reset Everything
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

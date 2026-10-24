@@ -24,6 +24,8 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
   const [isSelectMultiple, setIsSelectMultiple] = useState(false);
   const [selectedCardIds, setSelectedCardIds] = useState<Set<string>>(new Set());
   const [sortAscending, setSortAscending] = useState(false);
+  const [showMetricsModal, setShowMetricsModal] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   if (!deck) return null;
 
@@ -73,13 +75,11 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
     setSelectedCardIds(next);
   };
 
-  const handleDeleteSelected = () => {
-    if (selectedCardIds.size === 0) return;
-    if (confirm(`Delete ${selectedCardIds.size} selected cards?`)) {
-      selectedCardIds.forEach((id) => deleteCard(id));
-      setSelectedCardIds(new Set());
-      setIsSelectMultiple(false);
-    }
+  const executeDeleteSelected = () => {
+    selectedCardIds.forEach((id) => deleteCard(id));
+    setSelectedCardIds(new Set());
+    setIsSelectMultiple(false);
+    setShowDeleteConfirm(false);
   };
 
   return (
@@ -98,17 +98,17 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
         <div className="flex items-center gap-2">
           {isSelectMultiple ? (
             <button
-              onClick={handleDeleteSelected}
+              onClick={() => setShowDeleteConfirm(true)}
               disabled={selectedCardIds.size === 0}
               type="button"
-              className="px-3 py-1.5 rounded-full bg-red-100 text-red-600 text-xs font-semibold disabled:opacity-40"
+              className="px-3 py-1.5 rounded-full bg-red-100 text-red-600 text-xs font-semibold disabled:opacity-40 active:scale-95 transition-transform"
             >
               Delete ({selectedCardIds.size})
             </button>
           ) : (
             <>
               <button
-                onClick={() => alert(`Deck Metrics:\nTotal Cards: ${deckCards.length}\nAvg Retention: ${deck.retentionRate}%\nNext Wave: ${deck.nextWave}`)}
+                onClick={() => setShowMetricsModal(true)}
                 aria-label="Deck statistics"
                 type="button"
                 className="w-10 h-10 rounded-full bg-[#eeedf3] flex items-center justify-center text-[#414754] active:scale-95 transition-transform"
@@ -420,6 +420,69 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
           <span>Add New Card to Deck</span>
         </button>
       </div>
+
+      {/* Metrics Modal */}
+      {showMetricsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl border border-black/5 animate-scale-up">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h3 className="text-[18px] font-bold text-black">Deck Performance</h3>
+              <button
+                onClick={() => setShowMetricsModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="py-4 flex flex-col gap-3">
+              <div className="flex items-center justify-between text-[14px]">
+                <span className="text-slate-500">Total Cards</span>
+                <span className="font-bold text-black">{deckCards.length}</span>
+              </div>
+              <div className="flex items-center justify-between text-[14px]">
+                <span className="text-slate-500">Average Retention</span>
+                <span className="font-bold text-[#34C759]">{deck.retentionRate}%</span>
+              </div>
+              <div className="flex items-center justify-between text-[14px]">
+                <span className="text-slate-500">Next Review Wave</span>
+                <span className="font-bold text-black">{deck.nextWave}</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowMetricsModal(false)}
+              className="w-full h-11 rounded-full bg-[#0A84FF] text-white font-semibold text-[14px] active:scale-95"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Multi-cards Confirmation */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl border border-black/5 animate-scale-up">
+            <h3 className="text-[18px] font-bold text-black mb-1">Delete Cards?</h3>
+            <p className="text-[13px] text-slate-500 mb-5">
+              Permanently delete {selectedCardIds.size} cards from "{deck.title}"?
+            </p>
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 h-10 rounded-full bg-slate-100 text-slate-700 text-[13px] font-semibold active:scale-95"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={executeDeleteSelected}
+                className="flex-1 h-10 rounded-full bg-[#FF453A] text-white text-[13px] font-semibold shadow-md active:scale-95"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <AddCardModal
         isOpen={isAddModalOpen}

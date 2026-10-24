@@ -14,6 +14,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [sortMode, setSortMode] = useState<SortMode>('due');
   const [showInsightsToast, setShowInsightsToast] = useState(false);
+  const [deckToDelete, setDeckToDelete] = useState<{ id: string; title: string } | null>(null);
 
   const sortedDecks = [...decks].sort((a, b) => {
     if (sortMode === 'due') return b.dueCards - a.dueCards;
@@ -99,9 +100,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
           </button>
         </div>
 
-        {/* Optional Insights Banner */}
+        {/* Insights Banner */}
         {showInsightsToast && (
-          <div className="mt-3 p-3 rounded-xl bg-[#F2F2F7] text-[12px] text-slate-700 flex items-center justify-between">
+          <div className="mt-3 p-3 rounded-xl bg-[#F2F2F7] text-[12px] text-slate-700 flex items-center justify-between animate-fade-in">
             <span>🔥 5 consecutive days of study! Peak recall score: 94%.</span>
             <button
               onClick={() => setShowInsightsToast(false)}
@@ -187,9 +188,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      if (confirm(`Delete deck "${deck.title}" and its cards?`)) {
-                        deleteDeck(deck.id);
-                      }
+                      setDeckToDelete({ id: deck.id, title: deck.title });
                     }}
                     type="button"
                     className="w-8 h-8 rounded-full bg-[#ffdad6] text-[#ba1a1a] flex items-center justify-center shrink-0 active:scale-90"
@@ -262,6 +261,35 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
           <span className="material-symbols-outlined text-[30px]">add</span>
         </button>
       </div>
+
+      {/* In-App Delete Confirmation Modal */}
+      {deckToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl border border-black/5 animate-scale-up">
+            <h3 className="text-[18px] font-bold text-black mb-1">Delete Deck?</h3>
+            <p className="text-[13px] text-slate-500 mb-5">
+              Are you sure you want to delete <strong className="text-black">"{deckToDelete.title}"</strong> and all its flashcards? This cannot be undone.
+            </p>
+            <div className="flex gap-2.5">
+              <button
+                onClick={() => setDeckToDelete(null)}
+                className="flex-1 h-10 rounded-full bg-slate-100 text-slate-700 text-[13px] font-semibold active:scale-95"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  deleteDeck(deckToDelete.id);
+                  setDeckToDelete(null);
+                }}
+                className="flex-1 h-10 rounded-full bg-[#FF453A] text-white text-[13px] font-semibold shadow-md active:scale-95"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <CreateDeckModal
         isOpen={isCreateModalOpen}

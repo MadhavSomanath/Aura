@@ -3,6 +3,8 @@ import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI, Type } from '@google/genai';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
+import http from 'http';
 
 dotenv.config();
 
@@ -87,7 +89,7 @@ Notes:
 ${notes}
 """
 
-Extract the key terms, definitions, furigana/readings, romaji, contextual nuance, a mnemonic device, and an authentic example sentence.`;
+Extract key terms, definitions, furigana readings, romaji, contextual nuance, a mnemonic device, and an authentic example sentence.`;
 
     const response = await ai.models.generateContent({
       model: 'gemini-3.8-flash',
@@ -100,15 +102,15 @@ Extract the key terms, definitions, furigana/readings, romaji, contextual nuance
           items: {
             type: Type.OBJECT,
             properties: {
-              front: { type: Type.STRING, description: 'The main prompt or word (e.g. Kanji, medical term, design principle)' },
+              front: { type: Type.STRING, description: 'The main prompt or word' },
               frontSub: { type: Type.STRING, description: 'Reading, furigana or pronunciation guide' },
               romaji: { type: Type.STRING, description: 'Romaji or phonetic pronunciation' },
               back: { type: Type.STRING, description: 'Primary meaning or concise definition' },
               nuance: { type: Type.STRING, description: 'Nuance, context, and grammatical usage notes' },
               mnemonic: { type: Type.STRING, description: 'Creative memory hook or mnemonic device' },
-              sentenceJp: { type: Type.STRING, description: 'Natural example sentence in the target language or context' },
+              sentenceJp: { type: Type.STRING, description: 'Natural example sentence' },
               sentenceEn: { type: Type.STRING, description: 'English translation of the example sentence' },
-              tag: { type: Type.STRING, description: 'Category pill tag (e.g. "JLPT N2 / N3 • Vocab", "Core Concepts")' },
+              tag: { type: Type.STRING, description: 'Category pill tag' },
             },
             required: ['front', 'back', 'nuance', 'mnemonic'],
           },
@@ -211,22 +213,44 @@ Provide:
   }
 });
 
-// Setup Vite middleware in dev or static files in production
+// Setup HTTP server with Vite middleware in dev or static files in production
 async function startServer() {
+  const server = http.createServer(app);
+
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'dist')));
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
     });
   } else {
+    const isHmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: isHmrDisabled ? false : { server },
+      },
       appType: 'spa',
     });
+
     app.use(vite.middlewares);
+
+    app.use('*', async (req: Request, res: Response, next) => {
+      const url = req.originalUrl;
+      if (url.startsWith('/api')) {
+        return next();
+      }
+      try {
+        let template = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
+      } catch (e: any) {
+        vite.ssrFixStacktrace(e);
+        next(e);
+      }
+    });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
 }
