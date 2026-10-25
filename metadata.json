@@ -2,5 +2,7 @@
   "name": "Aura - iOS Native Spaced Repetition & Voice Flashcards",
   "description": "Apple HIG-crafted spaced repetition flashcard app with Gemini AI card extraction, 4-tier SM-2 grading, hands-free voice coach recall, and on-device model settings.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
