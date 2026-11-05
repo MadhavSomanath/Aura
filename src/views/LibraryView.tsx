@@ -38,6 +38,8 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
   };
 
   const daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const now = new Date();
+  const todayIndex = (now.getDay() + 6) % 7; // Monday = 0
 
   return (
     <div className="flex flex-col w-full pb-6 space-y-4 max-w-lg mx-auto">
@@ -45,7 +47,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
       <section className="flex flex-col pt-1">
         <div className="flex items-center justify-between mb-1">
           <span className="text-[12px] text-[#8E8E93] uppercase tracking-wider font-semibold">
-            Tuesday, Oct 24
+            {now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
           </span>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#e3e2e7] shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse" />
@@ -56,7 +58,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
           <h2 className="text-[34px] font-bold text-black tracking-tight">Library</h2>
           <button
             onClick={() => setIsEditMode(!isEditMode)}
-            className={`text-[13px] font-medium active:opacity-60 transition-opacity ${
+            className={`text-[15px] font-medium px-2 py-2 -mr-2 min-h-[44px] active:opacity-60 transition-opacity ${
               isEditMode ? 'text-[#FF453A] font-semibold' : 'text-[#005ab3]'
             }`}
             type="button"
@@ -86,7 +88,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
                 </span>
               </div>
               <p className="text-[13px] text-[#8E8E93] mt-0.5">
-                You're on fire! {reviewedTodayCount} cards reviewed today
+                {reviewedTodayCount > 0
+                  ? `You're on fire! ${reviewedTodayCount} ${reviewedTodayCount === 1 ? 'card' : 'cards'} reviewed today`
+                  : 'Review a few cards to keep your streak going'}
               </p>
             </div>
           </div>
@@ -116,8 +120,8 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
         {/* 7-Day Week Trackers */}
         <div className="grid grid-cols-7 gap-2 pt-4 mt-2">
           {daysOfWeek.map((day, index) => {
-            const isCompleted = weekProgress[index];
-            const isToday = index === 4; // Friday
+            const isToday = index === todayIndex;
+            const isCompleted = isToday ? reviewedTodayCount > 0 : index < todayIndex && weekProgress[index];
             return (
               <div key={index} className="flex flex-col items-center gap-1.5">
                 <span className={`text-[12px] font-medium ${isToday ? 'text-[#005ab3] font-bold' : 'text-[#8E8E93]'}`}>
@@ -214,6 +218,9 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
                     {deck.dueCards} Due
                   </span>
                 </div>
+                {deck.totalCards === 0 ? (
+                  <span className="text-[13px] text-[#8E8E93] font-medium">No cards yet</span>
+                ) : (
                 <div className="flex items-center gap-1.5">
                   <div
                     className={`w-2 h-2 rounded-full ${
@@ -224,6 +231,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
                     {deck.retentionRate}% retention
                   </span>
                 </div>
+                )}
               </div>
             </article>
           );
@@ -250,7 +258,8 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
         </button>
       </section>
 
-      {/* Floating Action Button (FAB) for Creating New Deck */}
+      {/* Floating Action Button (FAB) for Creating New Deck; hidden in edit mode so it can't cover delete buttons */}
+      {!isEditMode && (
       <div className="fixed right-4 bottom-24 z-30">
         <button
           onClick={() => setIsCreateModalOpen(true)}
@@ -261,6 +270,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
           <span className="material-symbols-outlined text-[30px]">add</span>
         </button>
       </div>
+      )}
 
       {/* In-App Delete Confirmation Modal */}
       {deckToDelete && (

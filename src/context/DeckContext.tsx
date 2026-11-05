@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { Deck, Flashcard, AppSettings, StudyGrade } from '../types';
 import { INITIAL_DECKS, INITIAL_CARDS, DEFAULT_SETTINGS } from '../data/initialDecks';
 import { triggerHaptic } from '../services/speechService';
@@ -14,7 +14,8 @@ interface DeckContextType {
   reviewedTodayCount: number;
   weekProgress: boolean[];
   setActiveDeckId: (id: string) => void;
-  openStudyMode: (deckId: string) => void;
+  activeStudyStartCardId: string | null;
+  openStudyMode: (deckId: string, startCardId?: string) => void;
   closeStudyMode: () => void;
   openVoiceCoach: (deckId?: string) => void;
   closeVoiceCoach: () => void;
@@ -35,8 +36,14 @@ const LOCAL_STORAGE_KEY_STREAK = 'aura_streak_v1';
 
 const DeckContext = createContext<DeckContextType | undefined>(undefined);
 
+// Due now = unseen, in learning, due today, or due within minutes/hours ("Due tomorrow", "In 4d" are not).
+export const isDueNow = (c: Flashcard) =>
+  c.state === 'new' || c.state === 'learning' || c.dueDate === 'Due Today' || /^Due in \d+[mh]$/.test(c.dueDate);
+
+const todayKey = () => new Date().toDateString();
+
 export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [decks, setDecks] = useState<Deck[]>(() => {
+  const [storedDecks, setDecks] = useState<Deck[]>(() => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY_DECKS);
       return saved ? JSON.parse(saved) : INITIAL_DECKS;
@@ -64,21 +71,55 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   const [dailyStreak, setDailyStreak] = useState<number>(5);
-  const [reviewedTodayCount, setReviewedTodayCount] = useState<number>(24);
+  const [reviewedTodayCount, setReviewedTodayCount] = useState<number>(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_STREAK) || 'null');
+      return saved?.date === todayKey() ? saved.count : 0;
+    } catch {
+      return 0;
+    }
+  });
+
+  // Deck counts are derived from the cards so every screen agrees.
+  const decks = useMemo(
+    () =>
+      storedDecks.map((d) => {
+        const deckCards = cards.filter((c) => c.deckId === d.id);
+        return {
+          ...d,
+          totalCards: deckCards.length,
+          newCards: deckCards.filter((c) => c.state === 'new').length,
+          dueCards: deckCards.filter(isDueNow).length,
+          retentionRate: deckCards.length
+            ? Math.round(deckCards.reduce((acc, c) => acc + c.recallPercent, 0) / deckCards.length)
+            : 0,
+        };
+      }),
+    [storedDecks, cards]
+  );
   const [weekProgress] = useState<boolean[]>([true, true, true, true, true, false, false]);
 
   const [activeDeckId, setActiveDeckId] = useState<string>('deck_japanese');
   const [activeStudyDeckId, setActiveStudyDeckId] = useState<string | null>(null);
+  const [activeStudyStartCardId, setActiveStudyStartCardId] = useState<string | null>(null);
   const [activeVoiceCoachDeckId, setActiveVoiceCoachDeckId] = useState<string | null>(null);
 
   // Sync to LocalStorage
   useEffect(() => {
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY_DECKS, JSON.stringify(decks));
+      localStorage.setItem(LOCAL_STORAGE_KEY_DECKS, JSON.stringify(storedDecks));
     } catch (e) {
       console.warn('Storage failed', e);
     }
-  }, [decks]);
+  }, [storedDecks]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY_STREAK, JSON.stringify({ date: todayKey(), count: reviewedTodayCount }));
+    } catch (e) {
+      console.warn('Storage failed', e);
+    }
+  }, [reviewedTodayCount]);
 
   useEffect(() => {
     try {
@@ -96,7 +137,8 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [settings]);
 
-  const openStudyMode = (deckId: string) => {
+  const openStudyMode = (deckId: string, startCardId?: string) => {
+    setActiveStudyStartCardId(startCardId || null);
     setActiveStudyDeckId(deckId);
   };
 
@@ -170,23 +212,9 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     setReviewedTodayCount((prev) => prev + 1);
 
-    // Refresh deck aggregate metrics
     const card = cards.find((c) => c.id === cardId);
     if (card) {
-      setDecks((prevDecks) =>
-        prevDecks.map((d) => {
-          if (d.id !== card.deckId) return d;
-          const deckCards = cards.filter((c) => c.deckId === d.id);
-          const totalRetention = deckCards.reduce((acc, curr) => acc + curr.recallPercent, 0);
-          const avgRetention = Math.round(totalRetention / (deckCards.length || 1));
-          return {
-            ...d,
-            dueCards: Math.max(0, d.dueCards - (grade !== 'again' ? 1 : 0)),
-            retentionRate: avgRetention,
-            lastStudied: 'Just now',
-          };
-        })
-      );
+      setDecks((prevDecks) => prevDecks.map((d) => (d.id === card.deckId ? { ...d, lastStudied: 'Just now' } : d)));
     }
   };
 
@@ -213,7 +241,7 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setDecks((prev) => prev.filter((d) => d.id !== deckId));
     setCards((prev) => prev.filter((c) => c.deckId !== deckId));
     if (activeDeckId === deckId) {
-      setActiveDeckId(decks[0]?.id || '');
+      setActiveDeckId(storedDecks.find((d) => d.id !== deckId)?.id || '');
     }
   };
 
@@ -238,18 +266,6 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     setCards((prev) => [newCard, ...prev]);
-    setDecks((prev) =>
-      prev.map((d) =>
-        d.id === cardData.deckId
-          ? {
-              ...d,
-              totalCards: d.totalCards + 1,
-              newCards: d.newCards + 1,
-              dueCards: d.dueCards + 1,
-            }
-          : d
-      )
-    );
   };
 
   const addMultipleCards = (newCardsData: Array<Partial<Flashcard> & { deckId: string; front: string; back: string }>) => {
@@ -273,44 +289,10 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }));
 
     setCards((prev) => [...createdCards, ...prev]);
-
-    // Update target decks
-    const countsByDeck: Record<string, number> = {};
-    createdCards.forEach((c) => {
-      countsByDeck[c.deckId] = (countsByDeck[c.deckId] || 0) + 1;
-    });
-
-    setDecks((prev) =>
-      prev.map((d) => {
-        const added = countsByDeck[d.id] || 0;
-        return added > 0
-          ? {
-              ...d,
-              totalCards: d.totalCards + added,
-              newCards: d.newCards + added,
-              dueCards: d.dueCards + added,
-            }
-          : d;
-      })
-    );
   };
 
   const deleteCard = (cardId: string) => {
-    const card = cards.find((c) => c.id === cardId);
-    if (card) {
-      setCards((prev) => prev.filter((c) => c.id !== cardId));
-      setDecks((prev) =>
-        prev.map((d) =>
-          d.id === card.deckId
-            ? {
-                ...d,
-                totalCards: Math.max(0, d.totalCards - 1),
-                dueCards: card.dueDate.includes('Due') ? Math.max(0, d.dueCards - 1) : d.dueCards,
-              }
-            : d
-        )
-      );
-    }
+    setCards((prev) => prev.filter((c) => c.id !== cardId));
   };
 
   const updateSettings = (newSettings: Partial<AppSettings>) => {
@@ -324,7 +306,7 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setDecks(INITIAL_DECKS);
     setCards(INITIAL_CARDS);
     setSettings(DEFAULT_SETTINGS);
-    setReviewedTodayCount(24);
+    setReviewedTodayCount(0);
   };
 
   return (
@@ -335,6 +317,7 @@ export const DeckProvider: React.FC<{ children: React.ReactNode }> = ({ children
         settings,
         activeDeckId,
         activeStudyDeckId,
+        activeStudyStartCardId,
         activeVoiceCoachDeckId,
         dailyStreak,
         reviewedTodayCount,

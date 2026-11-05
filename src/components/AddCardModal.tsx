@@ -10,6 +10,8 @@ interface AddCardModalProps {
 export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onClose }) => {
   const { addCard, decks } = useDeck();
   const deck = decks.find((d) => d.id === deckId);
+  // Reading, romaji and translation fields only make sense for language decks.
+  const isLanguage = deck?.category === 'Language';
 
   const [front, setFront] = useState('');
   const [frontSub, setFrontSub] = useState('');
@@ -68,7 +70,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
         </div>
 
         <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3.5 overflow-y-auto pr-1">
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className={`grid ${isLanguage ? 'grid-cols-2' : 'grid-cols-1'} gap-2.5`}>
             <div>
               <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
                 Front Word / Term *
@@ -77,11 +79,12 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
                 type="text"
                 value={front}
                 onChange={(e) => setFront(e.target.value)}
-                placeholder="e.g. 乾杯 or Fitts's Law"
+                placeholder={isLanguage ? 'e.g. 乾杯' : "e.g. Fitts's Law"}
                 required
                 className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[14px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
               />
             </div>
+            {isLanguage && (
             <div>
               <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
                 Reading / Furigana
@@ -94,8 +97,10 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
                 className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[14px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
               />
             </div>
+            )}
           </div>
 
+          {isLanguage && (
           <div>
             <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
               Phonetic / Romaji
@@ -108,16 +113,17 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
               className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[14px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
             />
           </div>
+          )}
 
           <div>
             <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
-              English Meaning / Definition *
+              {isLanguage ? 'English Meaning / Definition *' : 'Definition *'}
             </label>
             <input
               type="text"
               value={back}
               onChange={(e) => setBack(e.target.value)}
-              placeholder="e.g. Cheers, celebratory toast"
+              placeholder={isLanguage ? 'e.g. Cheers, celebratory toast' : 'e.g. Time to reach a target grows with distance and shrinks with size'}
               required
               className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[14px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
             />
@@ -125,13 +131,13 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
 
           <div>
             <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
-              Usage Nuance & Grammar Context
+              {isLanguage ? 'Usage Nuance & Grammar Context' : 'Notes & Context'}
             </label>
             <textarea
               rows={2}
               value={nuance}
               onChange={(e) => setNuance(e.target.value)}
-              placeholder="e.g. Customary toast said before taking the first sip with friends or colleagues."
+              placeholder={isLanguage ? 'e.g. Customary toast said before taking the first sip with friends or colleagues.' : 'e.g. Why make primary buttons large and close to the thumb.'}
               className="w-full p-2.5 rounded-xl bg-[#F2F2F7] text-black text-[13px] resize-none focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
             />
           </div>
@@ -144,12 +150,12 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
               type="text"
               value={mnemonic}
               onChange={(e) => setMnemonic(e.target.value)}
-              placeholder="e.g. Dry (乾) up the cup (杯) together!"
+              placeholder={isLanguage ? 'e.g. Dry (乾) up the cup (杯) together!' : 'e.g. Big and near = fast to hit'}
               className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[13px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className={`grid ${isLanguage ? 'grid-cols-2' : 'grid-cols-1'} gap-2.5`}>
             <div>
               <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
                 Example Sentence
@@ -158,10 +164,11 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
                 type="text"
                 value={sentenceJp}
                 onChange={(e) => setSentenceJp(e.target.value)}
-                placeholder="みんなで乾杯した。"
+                placeholder={isLanguage ? 'みんなで乾杯した。' : 'e.g. The checkout button sits in the thumb zone.'}
                 className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[13px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
               />
             </div>
+            {isLanguage && (
             <div>
               <label className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-1">
                 Sentence Translation
@@ -174,6 +181,7 @@ export const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, deckId, onCl
                 className="w-full h-10 px-3 rounded-xl bg-[#F2F2F7] text-black text-[13px] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]"
               />
             </div>
+            )}
           </div>
 
           <div className="flex gap-2.5 pt-3 shrink-0">

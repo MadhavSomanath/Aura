@@ -5,9 +5,9 @@ import { speakText, triggerHaptic } from '../services/speechService';
 export const SettingsView: React.FC = () => {
   const { settings, updateSettings, resetDefaults } = useDeck();
 
-  const [activeModel, setActiveModel] = useState(settings.activeModel);
+  const activeModel = settings.activeModel;
   const [downloadingModel, setDownloadingModel] = useState<string | null>(null);
-  const [downloadedVoices, setDownloadedVoices] = useState<Set<string>>(new Set(['Kenji', 'Daiki']));
+  const downloadedVoices = new Set(settings.downloadedVoices ?? ['Kenji', 'Daiki']);
   const [testingVoice, setTestingVoice] = useState<string | null>(null);
   const [resetSuccessToast, setResetSuccessToast] = useState(false);
   const [infoToast, setInfoToast] = useState<string | null>(null);
@@ -49,7 +49,7 @@ export const SettingsView: React.FC = () => {
 
   const handleDownloadVoice = (voiceName: string) => {
     triggerHaptic(settings.hapticAudio);
-    setDownloadedVoices((prev) => new Set([...prev, voiceName]));
+    updateSettings({ downloadedVoices: [...downloadedVoices, voiceName] });
     showToast(`Downloaded ${voiceName} Voice Pack!`);
   };
 
@@ -58,7 +58,6 @@ export const SettingsView: React.FC = () => {
     triggerHaptic(settings.hapticAudio);
     setTimeout(() => {
       setDownloadingModel(null);
-      setActiveModel(modelName);
       updateSettings({ activeModel: modelName });
       showToast(`Activated ${modelName}!`);
     }, 1500);
@@ -169,7 +168,6 @@ export const SettingsView: React.FC = () => {
               ) : (
                 <button
                   onClick={() => {
-                    setActiveModel('Llama-3-8B-Instruct');
                     updateSettings({ activeModel: 'Llama-3-8B-Instruct' });
                     showToast('Switched to Llama-3-8B');
                   }}
@@ -185,14 +183,6 @@ export const SettingsView: React.FC = () => {
                 <span className="material-symbols-outlined text-[16px] text-[#34C759]">verified_user</span>
                 Zero network telemetry
               </span>
-              <button
-                onClick={() => showToast('Model is integrated and locked as default runtime engine.')}
-                className="min-h-[38px] px-3.5 py-1.5 rounded-full bg-[#ffdad6] text-[#ba1a1a] text-[13px] font-medium active:scale-95 transition-transform flex items-center gap-1.5"
-                type="button"
-              >
-                <span className="material-symbols-outlined text-[16px]">delete</span>
-                <span>Delete (4.2 GB)</span>
-              </button>
             </div>
           </div>
 
