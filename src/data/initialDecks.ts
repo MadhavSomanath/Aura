@@ -270,4 +270,5 @@ export const DEFAULT_SETTINGS: AppSettings = {
   offlineWhisper: true,
   hapticAudio: true,
   speechRate: 1.0,
+  downloadedVoices: ['Kenji', 'Daiki'],
 };

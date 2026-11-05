@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDeck } from '../context/DeckContext';
+import { useDeck, isDueNow } from '../context/DeckContext';
 import { Flashcard } from '../types';
 import { speakText, triggerHaptic } from '../services/speechService';
 import { AddCardModal } from '../components/AddCardModal';
@@ -30,7 +30,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
   if (!deck) return null;
 
   // Filter calculations
-  const dueCardsList = deckCards.filter((c) => c.dueDate.includes('Due') || c.state === 'learning' || c.state === 'new');
+  const dueCardsList = deckCards.filter(isDueNow);
   const learningCardsList = deckCards.filter((c) => c.state === 'learning' || c.state === 'new');
   const masteredCardsList = deckCards.filter((c) => c.state === 'mastered');
 
@@ -48,7 +48,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
     }
 
     // Filter pill
-    if (activeFilter === 'due') return card.dueDate.includes('Due') || card.state === 'learning' || card.state === 'new';
+    if (activeFilter === 'due') return isDueNow(card);
     if (activeFilter === 'learning') return card.state === 'learning' || card.state === 'new';
     if (activeFilter === 'mastered') return card.state === 'mastered';
     return true;
@@ -141,7 +141,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
         </div>
         <h1 className="text-[34px] font-bold text-black tracking-tight">{deck.title}</h1>
         <p className="text-[15px] text-[#8E8E93] mt-0.5">
-          {deck.description} • {deckCards.length} Cards total
+          {deck.description} • {deckCards.length} {deckCards.length === 1 ? 'card' : 'cards'} total
         </p>
       </div>
 
@@ -194,12 +194,10 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
             <span className="material-symbols-outlined text-[16px] text-[#34C759]">verified</span>
           </div>
           <div className="my-1.5 flex items-baseline gap-1">
-            <span className="text-[22px] font-bold text-black tracking-tight">{deck.retentionRate}</span>
-            <span className="text-[12px] font-semibold text-[#8E8E93]">%</span>
+            <span className="text-[22px] font-bold text-black tracking-tight">{deckCards.length ? deck.retentionRate : '—'}</span>
+            {deckCards.length > 0 && <span className="text-[12px] font-semibold text-[#8E8E93]">%</span>}
           </div>
-          <div className="flex items-center text-[#34C759] text-[11px] font-medium leading-none">
-            <span className="material-symbols-outlined text-[14px]">trending_up</span>+3.4%
-          </div>
+          <div className="flex items-center text-[#8E8E93] text-[11px] font-medium leading-none">avg. recall</div>
         </div>
 
         {/* Card 3: Next Spike */}
@@ -212,7 +210,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
             <span className="text-[20px] font-bold text-black tracking-tight">{deck.nextWave}</span>
           </div>
           <div className="flex items-center text-[#8E8E93] text-[11px] leading-none">
-            <span>{dueCardsList.length} cards</span>
+            <span>{dueCardsList.length} due now</span>
           </div>
         </div>
       </div>
@@ -310,12 +308,14 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
         {filtered.length === 0 ? (
           <div className="bg-white rounded-2xl p-8 text-center text-slate-500 shadow-sm">
             <span className="material-symbols-outlined text-[36px] text-slate-300 mb-1">style</span>
-            <p className="font-semibold text-slate-700">No cards found</p>
-            <p className="text-[13px] text-slate-400 mt-1">Try another search or filter pill.</p>
+            <p className="font-semibold text-slate-700">{deckCards.length ? 'No cards found' : 'No cards yet'}</p>
+            <p className="text-[13px] text-slate-400 mt-1">
+              {deckCards.length ? 'Try another search or filter pill.' : 'Add your first card to start studying.'}
+            </p>
           </div>
         ) : (
           filtered.map((card) => {
-            const isDue = card.dueDate.includes('Due');
+            const isDue = isDueNow(card) && card.state !== 'new';
             const isNew = card.state === 'new';
             const isMastered = card.state === 'mastered';
             const isSelected = selectedCardIds.has(card.id);
@@ -325,7 +325,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
                 key={card.id}
                 onClick={() => {
                   if (isSelectMultiple) toggleSelectCard(card.id);
-                  else openStudyMode(deck.id);
+                  else openStudyMode(deck.id, card.id);
                 }}
                 className={`bg-white rounded-2xl p-4 shadow-[0_2px_8px_rgba(0,0,0,0.03)] active:bg-[#f4f3f8] transition-colors cursor-pointer border ${
                   isSelected ? 'border-[#0A84FF] bg-blue-50/20' : 'border-transparent'
@@ -441,7 +441,7 @@ export const DeckDetailView: React.FC<DeckDetailViewProps> = ({ deckId, onBack }
               </div>
               <div className="flex items-center justify-between text-[14px]">
                 <span className="text-slate-500">Average Retention</span>
-                <span className="font-bold text-[#34C759]">{deck.retentionRate}%</span>
+                <span className="font-bold text-[#34C759]">{deckCards.length ? `${deck.retentionRate}%` : '—'}</span>
               </div>
               <div className="flex items-center justify-between text-[14px]">
                 <span className="text-slate-500">Next Review Wave</span>

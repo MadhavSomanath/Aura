@@ -45,6 +45,7 @@ export interface AppSettings {
   offlineWhisper: boolean;
   hapticAudio: boolean;
   speechRate: number;     // 0.75 - 1.5
+  downloadedVoices?: string[];
 }
 
 export interface VoiceCoachDialogue {
