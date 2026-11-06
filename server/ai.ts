@@ -40,7 +40,9 @@ export async function callModel(system: string, user: string): Promise<any> {
     signal: AbortSignal.timeout(60_000),
   });
   if (!res.ok) {
-    throw new Error(`AI provider returned ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    // Provider error bodies can name the account or key; keep them in the server log only.
+    console.error(`AI provider error ${res.status}:`, (await res.text()).slice(0, 500));
+    throw new Error(`The AI provider returned an error (${res.status}). Check the server log for details.`);
   }
   const data = await res.json();
   return parseJsonReply(data.choices?.[0]?.message?.content ?? '');

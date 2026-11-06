@@ -16,7 +16,25 @@ const ROOT = path.resolve(path.dirname(__filename), '..');
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: '50kb' }));
+
+// Requests per minute per client on /api, so a stray client can't run up the AI bill.
+// shortcut: in-memory and per-process; move to a shared store if the server ever runs as several instances.
+const API_LIMIT_PER_MINUTE = 20;
+const apiHits = new Map<string, { count: number; windowStart: number }>();
+app.use('/api', (req, res, next) => {
+  const now = Date.now();
+  const key = req.ip || 'unknown';
+  const hit = apiHits.get(key);
+  if (!hit || now - hit.windowStart > 60_000) {
+    apiHits.set(key, { count: 1, windowStart: now });
+    return next();
+  }
+  if (++hit.count > API_LIMIT_PER_MINUTE) {
+    return res.status(429).json({ error: 'Too many requests. Wait a minute and try again.' });
+  }
+  next();
+});
 
 const NOT_SET_UP = 'AI is not set up. Add AI_API_KEY to .env and restart the server.';
 const RATINGS = ['Excellent (Pass)', 'Good', 'Needs Review'];
@@ -148,9 +166,11 @@ async function startServer() {
     });
   }
 
-  server.listen(PORT, '0.0.0.0', () => {
+  // Only this computer can connect unless HOST is set (e.g. HOST=0.0.0.0 to test on a phone on your Wi-Fi).
+  const HOST = process.env.HOST || '127.0.0.1';
+  server.listen(PORT, HOST, () => {
     const { configured, model } = aiConfig();
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}${HOST === '127.0.0.1' ? '' : ` (also reachable on your network via ${HOST})`}`);
     console.log(configured ? `AI: ${model}` : `AI: not set up (${NOT_SET_UP})`);
   });
 }
