@@ -83,6 +83,8 @@ Open http://localhost:3000. Without a key the app still runs; the AI features sa
 
 To use a provider other than Gemini, set `AI_BASE_URL` and `AI_MODEL` in `.env`. The examples are in [`.env.example`](.env.example).
 
+The server only accepts connections from your own computer, and each client can make 20 AI requests a minute. To try it on a phone on the same Wi-Fi, set `HOST=0.0.0.0` in `.env`. Anyone on that network can then use your AI key, so only do this on a network you trust.
+
 ```bash
 npm run lint     # type-check
 npm run build    # production build
