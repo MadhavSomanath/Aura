@@ -44,7 +44,7 @@ Built around **Apple Human Interface Guidelines (HIG)**, Aura delivers the tacti
 - **Auto-Advancing Flow**: 3-second auto-advance timer for unbroken flow-state study sessions.
 
 ### 3. Generative Notes-to-Flashcards Pipeline
-- **Smart Extraction**: Converts unstructured lecture notes, articles, or transcripts into spaced-repetition cards via Gemini 3.8 Flash (`@google/genai`).
+- **Smart Extraction**: Converts unstructured lecture notes, articles, or transcripts into spaced-repetition cards through any OpenAI-compatible model (Gemini 3.8 Flash by default), configured in `.env`.
 - **Comprehensive Linguistic Anatomy**: Automatically extracts `<ruby>` furigana annotations, romaji, nuanced usage notes, authentic sample sentences, and memorable mnemonic hooks.
 - **Review & Staging Carousel**: Horizontal card carousel allowing selective `Keep` or `Discard` before committing to the deck.
 
@@ -84,7 +84,7 @@ Aura uses a hybrid client-server topology designed for low-latency client transi
 ┌───────────────────────────────────────────────────────────────────────────┐
 │                      BACKEND SERVER (Express + Vite)                      │
 ├───────────────────────────────────────────────────────────────────────────┤
-│  • POST /api/generate-cards  --> Structured Gemini 3.8 Flash pipeline     │
+│  • POST /api/generate-cards  --> Any OpenAI-compatible model (ai.ts)      │
 │  • POST /api/voice-feedback  --> Semantic accuracy and pedagogical tips   │
 │  • Vite Middleware           --> Single-port (3000) full-stack serving    │
 └───────────────────────────────────────────────────────────────────────────┘
@@ -118,7 +118,7 @@ The visual language follows the **Aura iOS Native** design constitution:
 ### Prerequisites
 - Node.js 18+
 - Modern browser with Web Speech API support (Chrome, Safari, Edge)
-- (Optional) `GEMINI_API_KEY` for live AI generation and semantic voice scoring
+- An AI API key for card generation and voice scoring: Gemini by default, or any OpenAI-compatible provider (see `.env.example`)
 
 ### Installation
 ```bash
@@ -131,7 +131,7 @@ npm install
 
 # Configure environment variables
 cp .env.example .env
-# Add your GEMINI_API_KEY in .env (if calling Gemini endpoints)
+# Add your AI_API_KEY in .env (and AI_MODEL / AI_BASE_URL to use another provider)
 
 # Start the full-stack development server
 npm run dev

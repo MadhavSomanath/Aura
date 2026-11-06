@@ -21,12 +21,10 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
 
-  const [userTranscript, setUserTranscript] = useState('Yakusoku means a promise or an appointment with someone.');
-  const [matchPercent, setMatchPercent] = useState<number>(98);
-  const [rating, setRating] = useState<'Excellent (Pass)' | 'Good' | 'Needs Review'>('Excellent (Pass)');
-  const [coachFeedback, setCoachFeedback] = useState(
-    "Perfect nuance! Remember it often pairs with する (suru) — '約束をする'."
-  );
+  const [userTranscript, setUserTranscript] = useState('');
+  const [matchPercent, setMatchPercent] = useState<number | null>(null);
+  const [rating, setRating] = useState<'Excellent (Pass)' | 'Good' | 'Needs Review' | null>(null);
+  const [coachFeedback, setCoachFeedback] = useState('');
   const [isEvaluating, setIsEvaluating] = useState(false);
 
   // Auto-advance countdown
@@ -81,6 +79,8 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
   const handleEvaluateTranscript = async (transcript: string) => {
     if (!transcript.trim()) return;
     setIsEvaluating(true);
+    setMatchPercent(null);
+    setRating(null);
     triggerHaptic(settings.hapticAudio);
 
     try {
@@ -95,14 +95,16 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
         }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setMatchPercent(data.matchPercent || 94);
-        setRating(data.rating || 'Excellent (Pass)');
-        setCoachFeedback(data.feedback || 'Great recall!');
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        // No grade: a failed check must not reschedule the card.
+        setCoachFeedback(data.error || `Couldn't score that answer (${res.status}).`);
+      } else {
+        setMatchPercent(data.matchPercent);
+        setRating(data.rating);
+        setCoachFeedback(data.feedback);
 
-        // Grade card as Good/Easy
-        gradeCard(currentCard.id, data.matchPercent > 90 ? 'easy' : 'good');
+        gradeCard(currentCard.id, data.rating === 'Excellent (Pass)' ? 'easy' : data.rating === 'Good' ? 'good' : 'again');
 
         // Speak feedback if enabled
         if (settings.offlineWhisper) {
@@ -114,10 +116,7 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
       }
     } catch (err) {
       console.warn('Voice feedback evaluation error:', err);
-      setMatchPercent(92);
-      setRating('Excellent (Pass)');
-      setCoachFeedback("Well explained! Moving to next card.");
-      setAutoAdvanceSeconds(3);
+      setCoachFeedback('Could not reach the server. Is it running?');
     } finally {
       setIsEvaluating(false);
     }
@@ -128,6 +127,8 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
     setCardIndex((prev) => prev + 1);
     setUserTranscript('');
     setCoachFeedback('');
+    setMatchPercent(null);
+    setRating(null);
   };
 
   const togglePause = () => {
@@ -168,7 +169,7 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
 
         <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1C1C1E] border border-white/10 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-[#34C759] animate-pulse" />
-          <span className="text-[12px] font-medium text-white/90">Whisper Core ML • Offline</span>
+          <span className="text-[12px] font-medium text-white/90">Speech recognition</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -224,7 +225,7 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
                 <span className="material-symbols-outlined text-[14px]">mic</span>
                 <span>YOU</span>
               </div>
-              {matchPercent && (
+              {matchPercent !== null && (
                 <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#0A84FF]/20 text-[#0A84FF]">
                   {matchPercent}% match
                 </span>
@@ -240,8 +241,8 @@ export const LiveVoiceCoachModal: React.FC<LiveVoiceCoachModalProps> = ({ deckId
             <div className="flex items-center gap-1.5">
               <span className="text-[#5E5CE6] text-[11px] font-bold tracking-wider uppercase">COACH</span>
               {rating && (
-                <span className="flex items-center gap-1 text-[11px] font-semibold text-[#34C759]">
-                  <span className="material-symbols-outlined text-[13px]">check_circle</span>
+                <span className={`flex items-center gap-1 text-[11px] font-semibold ${rating === 'Needs Review' ? 'text-[#FF9F0A]' : 'text-[#34C759]'}`}>
+                  <span className="material-symbols-outlined text-[13px]">{rating === 'Needs Review' ? 'replay' : 'check_circle'}</span>
                   <span>Semantic Accuracy: {rating}</span>
                 </span>
               )}
