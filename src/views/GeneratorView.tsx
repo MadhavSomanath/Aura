@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDeck } from '../context/DeckContext';
 import { Flashcard } from '../types';
 import { speakText, triggerHaptic } from '../services/speechService';
@@ -15,45 +15,23 @@ export const GeneratorView: React.FC = () => {
 
   const [notes, setNotes] = useState(SAMPLE_NOTES);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [generationModel, setGenerationModel] = useState('Mistral 7B (On-Device)');
+  const [generationModel, setGenerationModel] = useState('Checking AI…');
   const [successToast, setSuccessToast] = useState<string | null>(null);
 
   // Generated candidate cards
-  const [generatedCards, setGeneratedCards] = useState<Array<Partial<Flashcard> & { id: string; status: 'pending' | 'kept' | 'discarded' }>>([
-    {
-      id: 'gen_1',
-      front: '木漏れ日',
-      frontSub: 'こもれび',
-      romaji: 'Komorebi',
-      back: 'Sunlight filtering through trees',
-      nuance: 'Poetic noun describing sunlight and leaves interplay.',
-      mnemonic: 'Tree (木) leaks (漏) sunlight (日).',
-      tag: 'JLPT N2 / N3 • Vocab',
-      status: 'pending',
-    },
-    {
-      id: 'gen_2',
-      front: '改善',
-      frontSub: 'かいぜん',
-      romaji: 'Kaizen',
-      back: 'Continuous improvement',
-      nuance: 'Philosophy of small, daily positive compounding changes.',
-      mnemonic: 'Change (改) for the good (善).',
-      tag: 'Business & Philosophy',
-      status: 'pending',
-    },
-    {
-      id: 'gen_3',
-      front: '過信',
-      frontSub: 'かしん',
-      romaji: 'Kashin',
-      back: 'Overconfidence',
-      nuance: 'Trusting excessively in one\'s own ability or luck.',
-      mnemonic: 'Excessive (過) trust/belief (信).',
-      tag: 'Kanji Compound',
-      status: 'pending',
-    },
-  ]);
+  const [generatedCards, setGeneratedCards] = useState<Array<Partial<Flashcard> & { id: string; status: 'pending' | 'kept' | 'discarded' }>>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [aiReady, setAiReady] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/ai-status')
+      .then((r) => r.json())
+      .then((s) => {
+        setAiReady(s.configured);
+        setGenerationModel(s.configured ? s.model : 'AI not set up');
+      })
+      .catch(() => setGenerationModel('AI unavailable'));
+  }, []);
 
   const [charCount, setCharCount] = useState(SAMPLE_NOTES.length);
   const tokenCount = Math.round(charCount / 4);
@@ -77,6 +55,7 @@ export const GeneratorView: React.FC = () => {
   const handleGenerate = async () => {
     if (!notes.trim()) return;
     setIsGenerating(true);
+    setError(null);
     triggerHaptic(settings.hapticAudio);
 
     try {
@@ -90,8 +69,10 @@ export const GeneratorView: React.FC = () => {
         }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(data.error || `Card generation failed (${res.status}).`);
+      } else {
         if (data.cards && data.cards.length > 0) {
           setGeneratedCards(
             data.cards.map((c: any) => ({
@@ -104,6 +85,7 @@ export const GeneratorView: React.FC = () => {
       }
     } catch (err) {
       console.warn('Card generation error:', err);
+      setError('Could not reach the server. Is it running?');
     } finally {
       setIsGenerating(false);
     }
@@ -279,12 +261,8 @@ export const GeneratorView: React.FC = () => {
           <div className="flex items-center gap-1.5 text-[#414754]">
             <span className="material-symbols-outlined text-[15px] text-[#005ab3]">memory</span>
             <span className="text-[12px]">
-              {charCount.toLocaleString()} chars • ~{tokenCount} tokens (Local inference)
+              {charCount.toLocaleString()} chars • ~{tokenCount} tokens
             </span>
-          </div>
-          <div className="flex items-center gap-1 text-[#414754] text-[12px]">
-            <span className="material-symbols-outlined text-[14px] text-[#34C759]">speed</span>
-            <span>42 t/s</span>
           </div>
         </div>
       </div>
@@ -307,15 +285,20 @@ export const GeneratorView: React.FC = () => {
               <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                 auto_awesome
               </span>
-              <span>Generate with AI (Local)</span>
+              <span>Generate with AI</span>
             </>
           )}
         </button>
 
         <div className="flex items-center gap-1 text-[#414754] text-[12px]">
-          <span className="material-symbols-outlined text-[14px]">lock</span>
-          <span>100% On-Device • No data leaves your iPhone</span>
+          <span className="material-symbols-outlined text-[14px]">cloud</span>
+          <span>{aiReady ? `Your notes are sent to ${generationModel} to write the cards` : 'Add an AI key to .env to generate cards'}</span>
         </div>
+        {error && (
+          <p role="alert" className="text-[#C4292B] text-[13px] text-center font-medium px-2">
+            {error}
+          </p>
+        )}
       </div>
 
       {/* Generated Flashcards Preview Section */}

@@ -85,7 +85,7 @@ function AppContent() {
             </div>
             <h2 className="text-[22px] font-bold text-black mb-1">Ambient Voice Recall</h2>
             <p className="text-[14px] text-slate-500 max-w-xs mb-6">
-              Hands-free, real-time speech recall session powered by Whisper on-device ML.
+              Hands-free recall: say each answer aloud and get instant feedback from the AI coach.
             </p>
             <button
               onClick={() => openVoiceCoach(selectedDeckId || decks[0]?.id)}

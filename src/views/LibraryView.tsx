@@ -51,7 +51,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
           </span>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#e3e2e7] shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse" />
-            <span className="text-[12px] text-[#414754] font-medium">On-Device AI Active</span>
+            <span className="text-[12px] text-[#414754] font-medium">AI Coach</span>
           </div>
         </div>
         <div className="flex items-baseline justify-between">
@@ -246,7 +246,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({ onSelectDeck }) => {
           </div>
           <div className="min-w-0">
             <h4 className="text-[17px] text-white font-semibold truncate leading-tight">Ready for Voice Recall?</h4>
-            <p className="text-[12px] text-white/80 truncate">Whisper AI runs 100% on-device</p>
+            <p className="text-[12px] text-white/80 truncate">Say your answers, get instant feedback</p>
           </div>
         </div>
         <button
