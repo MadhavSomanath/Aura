@@ -1,168 +1,118 @@
-# Aura — iOS Native AI Voice & Spaced Repetition Flashcards
+# Aura
 
-> **Product Teardown & Engineering Spec**
+**An AI study tutor with spaced-repetition flashcards built in.**
 
----
-
-## 📱 Executive Summary & Product Vision
-
-Traditional flashcard applications suffer from **passive recognition bias** and **tap-grading fatigue**: learners repeatedly tap "Good" on cards they recognize visually, but cannot retrieve verbally under conversational pressure. This gap is especially painful for language acquisition (e.g. Japanese JLPT), medical terminology, and technical systems engineering.
-
-**Aura** reimagines spaced repetition for the Apple ecosystem. It bridges visual flashcards with **hands-free ambient voice recall**, empowering learners to verbally explain concepts while an on-device AI coach evaluates pronunciation, semantic precision, and nuance in real time.
-
-Built around **Apple Human Interface Guidelines (HIG)**, Aura delivers the tactile fluidity and privacy-first positioning of native iOS software with seamless zero-telemetry local intelligence.
-
-```
-┌───────────────────────────────────────────────────────────────────────────┐
-│                              THE AURA FLYWHEEL                            │
-│                                                                           │
-│   ┌────────────────┐       ┌─────────────────┐       ┌────────────────┐  │
-│   │ 1. Raw Notes   │ ───▶  │ 2. AI Generator │ ───▶  │ 3. Smart Decks │  │
-│   │ Unstructured   │       │ Structured SM-2 │       │ Spaced Waves   │  │
-│   └────────────────┘       └─────────────────┘       └───────┬────────┘  │
-│                                                              │           │
-│   ┌────────────────┐       ┌─────────────────┐               │           │
-│   │ 5. Mastery &   │ ◀───  │ 4. Voice Recall │ ◀─────────────┘           │
-│   │ Retention Loop │       │ Ambient Coach   │                           │
-│   └────────────────┘       └─────────────────┘                           │
-└───────────────────────────────────────────────────────────────────────────┘
-```
+<p>
+  <img src="docs/images/library.png" alt="Aura home screen: today's streak and study decks with due counts" width="240">
+  <img src="docs/images/study-front.png" alt="Study card showing only the prompt, with a Show Answer button" width="240">
+  <img src="docs/images/study-revealed.png" alt="Answer revealed, with grade buttons pinned in thumb reach" width="240">
+</p>
 
 ---
 
-## 🎯 Core Product Pillars
+## Why I built it
 
-### 1. Spaced Repetition Engine (SM-2 Core)
-- **4-Tier Ergonomic Grading**: `Again (<1m)`, `Hard (12m)`, `Good (1d)`, and `Easy (4d)` tuned with haptic feedback to prevent mis-clicks.
-- **Dynamic Wave Forecasting**: Real-time interval calculation (`Next Wave in 2h 40m`) based on historical retention decay.
-- **Visual Retention Metering**: Segmented card-level recall percentage and deck-level confidence indicators.
+I was learning Japanese alongside work topics like product design and system architecture, and I kept switching between two kinds of tools.
 
-### 2. Ambient AI Voice Coach (Hands-Free Call Interface)
-- **Conversational Call UX**: Styled after iOS Phone / FaceTime audio calls with Whisper Core ML aesthetic.
-- **Live Acoustic Capture**: Uses the Web Speech API (`SpeechRecognition`) for immediate transcription alongside one-tap test prompts for restricted mic environments.
-- **Semantic Nuance Evaluation**: Evaluates meaning, grammar context, and collocations (e.g. recognizing that *約束* frequently pairs with *する*).
-- **Auto-Advancing Flow**: 3-second auto-advance timer for unbroken flow-state study sessions.
+**Flashcard apps** were great at making me remember. Spaced repetition works, and apps like Anki prove it. But they only drill: when a word or concept didn't click, the app had nothing to say. It just showed the card again.
 
-### 3. Generative Notes-to-Flashcards Pipeline
-- **Smart Extraction**: Converts unstructured lecture notes, articles, or transcripts into spaced-repetition cards through any OpenAI-compatible model (Gemini 3.8 Flash by default), configured in `.env`.
-- **Comprehensive Linguistic Anatomy**: Automatically extracts `<ruby>` furigana annotations, romaji, nuanced usage notes, authentic sample sentences, and memorable mnemonic hooks.
-- **Review & Staging Carousel**: Horizontal card carousel allowing selective `Keep` or `Discard` before committing to the deck.
+**AI chats** were great at explaining. I could ask what a word really means, when to use it, or why an architecture works the way it does. But nothing stuck. The next week the chat had no idea what I'd learned, what I kept getting wrong, or what I should review.
 
-### 4. Hardware Diagnostic & Local Model Management
-- **Apple Neural Engine (ANE) Telemetry**: Live diagnostic monitoring 5.6 GB of local model storage (LLM weights, TTS voice packs, and cache).
-- **Multi-Engine Switching**: Toggle between `Llama-3-8B-Instruct` (quantized) and `Phi-3.5 Mini`.
-- **High-Fidelity Offline TTS**: Voice previews for *Kenji* (JP Natural Female), *Daiki* (JP Deep Male), *Sakura*, and *Elena* with speed scaling from 0.75x to 1.50x.
+Nothing I used did both: **explain like a tutor, and remember like a flashcard system.** That's the gap Aura is built for. The flashcards are the memory, and the AI is the teacher that works on top of them.
 
 ---
 
-## 📐 System Architecture
+## What it does today
 
-Aura uses a hybrid client-server topology designed for low-latency client transitions and secure server-side AI execution:
+| | |
+|---|---|
+| **Spaced-repetition study** | Decks with four-button grading (Again, Hard, Good, Easy) that schedules each card. Due counts are calculated from the cards themselves, so every screen agrees. |
+| **Recall first** | Each card shows only the prompt until you tap **Show Answer**. Grades stay pinned within thumb reach, and you can swipe left or right to grade. |
+| **AI card generation** | Paste notes and the AI drafts cards with meaning, nuance, a mnemonic and an example sentence (plus readings and romaji for Japanese). You keep or discard each one before it reaches a deck. |
+| **Voice recall** | Say the answer aloud. The AI scores how well you recalled the meaning, and the card is graded from that score. |
+| **Any AI provider** | Gemini by default, or any OpenAI-compatible model (OpenAI, OpenRouter, a local Ollama) by editing `.env`. |
+| **Your data stays local** | Decks, cards and progress are saved in the browser. Only the text you send for generation or scoring goes to the AI provider. |
 
-```
-┌───────────────────────────────────────────────────────────────────────────┐
-│                           CLIENT BROWSER (React)                          │
-├───────────────────────────────────────────────────────────────────────────┤
-│                                                                           │
-│  ┌───────────────────────┐   ┌─────────────────────────────────────────┐  │
-│  │     DeckContext       │   │           Speech & Audio Engine         │  │
-│  │  - LocalStorage Sync  │   │  - SpeechRecognition (Web Speech API)   │  │
-│  │  - SM-2 Intervals     │   │  - SpeechSynthesis (Pitch & Pace)       │  │
-│  │  - Streak Counter     │   │  - Taptic Engine Haptic Feedback        │  │
-│  └───────────┬───────────┘   └────────────────────┬────────────────────┘  │
-│              │                                    │                       │
-│              ▼                                    ▼                       │
-│  ┌─────────────────────────────────────────────────────────────────────┐  │
-│  │                         UI Views & Modals                           │  │
-│  │  [Library]       [Deck Detail]     [Study Session]  [Voice Coach]   │  │
-│  │  • Streak Deck   • Search & Filter • 4-Button SRS   • Live Dialogue │  │
-│  │  • Create Deck   • Audio Playback  • Furigana Ruby  • Auto-Advance  │  │
-│  └──────────────────────────────────┬──────────────────────────────────┘  │
-└─────────────────────────────────────┼─────────────────────────────────────┘
-                                      │ HTTP REST (/api/*)
-                                      ▼
-┌───────────────────────────────────────────────────────────────────────────┐
-│                      BACKEND SERVER (Express + Vite)                      │
-├───────────────────────────────────────────────────────────────────────────┤
-│  • POST /api/generate-cards  --> Any OpenAI-compatible model (ai.ts)      │
-│  • POST /api/voice-feedback  --> Semantic accuracy and pedagogical tips   │
-│  • Vite Middleware           --> Single-port (3000) full-stack serving    │
-└───────────────────────────────────────────────────────────────────────────┘
-```
+**Not real yet:** the Settings screen's on-device model manager (Llama, Phi-3.5, voice downloads) is a design mockup. Nothing downloads or runs locally.
 
 ---
 
-## 🎨 Design System & HIG Compliance
+## Product thinking
 
-The visual language follows the **Aura iOS Native** design constitution:
+Aura started as a fast prototype. I then audited it like a real product: I tested every screen on an iPhone simulator, found the problems, and fixed them before adding features.
 
-| Token | Semantic Role | Value |
-|---|---|---|
-| **Background** | System Grouped Canvas | `#F2F2F7` |
-| **Surface** | Elevated Content Container | `#FFFFFF` (`rounded-2xl`, ambient 2px shadow) |
-| **Primary Accent** | iOS Electric Blue | `#0A84FF` / `#005ab3` |
-| **Coach Gradient** | AI Voice Glow | Linear Gradient (`#5E5CE6` → `#0A84FF`) |
-| **Feedback: Success** | High Retention / Pass | `#34C759` |
-| **Feedback: Warning** | Due Spikes / Medium Retention | `#FF9F0A` |
-| **Feedback: Error** | Lapses / Hard Reset | `#FF453A` / `#ba1a1a` |
-| **Typography** | Apple System Type Scale | Inter (Tight negative tracking on large titles) |
+**[Read the UX case study (PDF, 19 slides)](docs/ux-case-study/Aura-UX-Case-Study.pdf)**
 
-- **44px Touch Rule**: All interactive buttons, chips, and list rows maintain $\ge 44 \times 44\text{px}$ touch targets.
-- **Zero-Pill Metadata**: Quiet inline text with subtle typographic dots (`·`) instead of loud static badges.
-- **15% Mobile Sticky Cap**: Header and tab bar combined occupy $< 15\%$ of viewport height.
+It covers:
+- **Audit:** the due counts disagreed between screens, the answer was visible before recall, and the grade buttons sat below the fold
+- **Three proto-personas:** an exam crammer, a busy professional and a lapsed learner, each with a journey map
+- **User stories** with acceptance criteria, design principles and an impact-versus-effort prioritization
+- **What shipped:** the before-and-after study screen ([PR #1](https://github.com/MadhavSomanath/Aura/pull/1))
+- **The proposed v2:** a single "Today" screen, three tabs instead of four, and a catch-up mode for returning learners
+- **How success would be measured:** weekly active review days, with an input metric for each persona
 
 ---
 
-## 🚀 Getting Started
+## Roadmap
 
-### Prerequisites
-- Node.js 18+
-- Modern browser with Web Speech API support (Chrome, Safari, Edge)
-- An AI API key for card generation and voice scoring: Gemini by default, or any OpenAI-compatible provider (see `.env.example`)
+Aura's next step is to become the tutor.
 
-### Installation
+- [x] Spaced-repetition engine, decks, and recall-first study flow
+- [x] AI card generation and voice recall scoring
+- [x] Runs anywhere with any AI provider, not tied to the tool it was prototyped in ([PR #3](https://github.com/MadhavSomanath/Aura/pull/3))
+- [ ] **Tutor chat:** a chat that can read your decks and act on them: tell you what to study, explain a card you keep missing, create cards as you talk, and quiz you in the conversation
+- [ ] **Tutor memory:** live due counts and weak cards sent with every message, plus a learner profile (exam date, recurring mistakes) that you can view and edit
+- [ ] **Today screen and catch-up mode** from the case study
+- [ ] **Use it anywhere:** hosted behind a passcode and installable on a phone home screen, with progress synced across devices
+
+---
+
+## Run it yourself
+
+You need Node.js 20 or later, and an API key for an AI provider.
+
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/aura-flashcards.git
-cd aura-flashcards
-
-# Install dependencies
+git clone https://github.com/MadhavSomanath/Aura.git
+cd Aura
 npm install
-
-# Configure environment variables
-cp .env.example .env
-# Add your AI_API_KEY in .env (and AI_MODEL / AI_BASE_URL to use another provider)
-
-# Start the full-stack development server
+cp .env.example .env    # then add your AI_API_KEY
 npm run dev
 ```
 
-The app will be live at `http://localhost:3000`.
+Open http://localhost:3000. Without a key the app still runs; the AI features say they aren't set up.
 
----
-
-## 🧪 Verification & Test Suite
+To use a provider other than Gemini, set `AI_BASE_URL` and `AI_MODEL` in `.env`. The examples are in [`.env.example`](.env.example).
 
 ```bash
-# Check TypeScript compilation
-npm run lint
-
-# Verify production build
-npm run build
+npm run lint     # type-check
+npm run build    # production build
 ```
 
 ---
 
-## 🔮 Product Roadmap
+## How it's built
 
-- [x] **v1.0**: Core SM-2 Spaced Repetition engine with 4 pre-seeded decks.
-- [x] **v1.1**: Hands-free Voice Coach call view with real-time speech feedback.
-- [x] **v1.2**: Gemini-powered smart note extraction pipeline.
-- [ ] **v2.0**: Direct Core ML WebGPU execution for 100% offline in-browser Whisper inference.
-- [ ] **v2.1**: Apple Pencil canvas mode for handwritten kanji and diagram recall.
-- [ ] **v2.2**: iCloud sync and Anki `.apkg` deck import/export.
+```
+Aura/
+├── src/                  React app (Vite, Tailwind)
+│   ├── views/            Library, deck detail, study, generator, voice coach, settings
+│   ├── components/       Shared UI: nav, header, modals
+│   ├── context/          DeckContext: decks, cards, scheduling, saved to localStorage
+│   └── services/         Browser speech recognition and text-to-speech
+├── server/
+│   ├── index.ts          Express server: serves the app and the /api routes
+│   └── ai.ts             One call to any OpenAI-compatible model
+└── docs/
+    ├── ux-case-study/    The case study deck (PDF)
+    └── images/           Screenshots
+```
+
+- **Frontend:** React 19, TypeScript, Vite and Tailwind. All study state lives in one React context and is saved to `localStorage`.
+- **Backend:** a small Express server. It keeps the API key on the server and exposes `/api/generate-cards`, `/api/voice-feedback` and `/api/ai-status`. AI replies are checked before they reach your decks.
+- **Speech:** the browser's built-in speech recognition and voices.
 
 ---
 
-## 📄 License
+## License
+
 Apache-2.0
